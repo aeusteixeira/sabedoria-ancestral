@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group( ['prefix' => '/', 'as' => 'website.'], function () {
+
+    Route::get('/', [App\Http\Controllers\WebsiteController::class, 'index'])->name('index');
+    Route::get('/hora-planetaria', [App\Http\Controllers\WebsiteController::class, 'horaPlanetaria'])->name('hora-planetaria');
+    Route::get('/calendario-lunar', [App\Http\Controllers\WebsiteController::class, 'calendarioLunar'])->name('calendario-lunar');
+    Route::get('/planetas', [App\Http\Controllers\WebsiteController::class, 'planetas'])->name('planetas');
+    Route::get('/ervas', [App\Http\Controllers\WebsiteController::class, 'ervas'])->name('ervas');
+    Route::get('/erva', [App\Http\Controllers\WebsiteController::class, 'erva'])->name('erva');
 });
 
 Auth::routes();
