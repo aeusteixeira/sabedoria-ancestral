@@ -10,6 +10,8 @@ Route::group( ['prefix' => '/', 'as' => 'website.'], function () {
     Route::get('/planetas', [App\Http\Controllers\WebsiteController::class, 'planetas'])->name('planetas');
     Route::get('/ervas', [App\Http\Controllers\WebsiteController::class, 'ervas'])->name('ervas');
     Route::get('/erva', [App\Http\Controllers\WebsiteController::class, 'erva'])->name('erva');
+
+    Route::get('/sobre', [App\Http\Controllers\WebsiteController::class, 'sobre'])->name('sobre');
 });
 
 Auth::routes();

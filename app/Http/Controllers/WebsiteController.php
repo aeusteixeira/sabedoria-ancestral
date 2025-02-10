@@ -35,4 +35,9 @@ class WebsiteController extends Controller
      return view('website.erva');
     }
 
+    public function sobre()
+    {
+        return view('website.sobre');
+    }
+
 }

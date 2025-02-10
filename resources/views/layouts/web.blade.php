@@ -32,60 +32,64 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="mx-auto mb-2 navbar-nav me-auto mb-lg-0">
-                    <!-- Seção: Ferramentas Esotéricas -->
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('website.index') ? 'active' : '' }}"
-                            href="{{ route('website.index') }}">
-                            🏠 Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('website.calendario-lunar') ? 'active' : '' }}" href="{{ route('website.calendario-lunar') }}">
-                            🌙 Calendário Lunar
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('website.planetas') ? 'active' : '' }}"
-                            href="{{ route('website.planetas') }}">
-                            🪐 Planetas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('website.hora-planetaria') ? 'active' : '' }}"
-                            href="{{ route('website.hora-planetaria') }}">
-                            ⏳ Hora Planetária
-                        </a>
-                    </li>
-                    <!-- Dropdown: Ferramentas geral -->
+                    <!-- Links de navegação -->
+                    @foreach([
+                        ['route' => 'website.index', 'icon' => '🏠', 'label' => 'Home'],
+                        ['route' => 'website.sobre', 'icon' => '📜', 'label' => 'Sobre'],
+                        ['route' => 'website.ervas', 'icon' => '🌿', 'label' => 'Ervas'],
+                        ['route' => 'website.calendario-lunar', 'icon' => '🌙', 'label' => 'Calendário Lunar'],
+                        ['route' => 'website.planetas', 'icon' => '🪐', 'label' => 'Planetas'],
+                        ['route' => 'website.hora-planetaria', 'icon' => '⏳', 'label' => 'Hora Planetária']
+                    ] as $menuItem)
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs($menuItem['route']) ? 'active' : '' }}" href="{{ route($menuItem['route']) }}">
+                                {{ $menuItem['icon'] }} {{ $menuItem['label'] }}
+                            </a>
+                        </li>
+                    @endforeach
+
+                    <!-- Dropdown: Ferramentas Esotéricas -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             🔮 Ferramentas Esotéricas
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" href="#">🎴 Baralho Cigano</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">🔮 Tarot</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">🔢 Número do Destino
-                                </a>
-
+                            <li><a class="dropdown-item" href="#">🎴 Baralho Cigano</a></li>
+                            <li><a class="dropdown-item" href="#">🔮 Tarot</a></li>
+                            <li><a class="dropdown-item" href="#">🔢 Número do Destino</a></li>
+                        </ul>
                     </li>
                 </ul>
-                <!-- Resumo da lua do dia, hora planetária e link para o perfil do usuário -->
-                <div class="d-flex">
-                    <p class="my-auto text-light me-3">🌕 Lua Cheia</p>
-                    <p class="my-auto text-light me-3">⏳ Hora de Júpiter</p>
-                    <a href="#" class="btn btn-outline-light">Perfil</a>
-                </div>
+
+                <!-- Seção: Autenticação -->
+                <ul class="navbar-nav ms-auto">
+                    @auth
+                        <!-- Usuário autenticado -->
+                        <li class="nav-item">
+                            <a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a>
+                        </li>
+                    @else
+                        <!-- Usuário não autenticado -->
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" class="nav-link btn btn-login">Entrar</a>
+                        </li>
+
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}" class="nav-link btn">Cadastrar</a>
+                            </li>
+                        @endif
+                    @endauth
+                </ul>
             </div>
         </div>
     </nav>
+
+
     <header class="py-5 text-center text-light">
         <h1 id="title-header">
             @yield('title')
@@ -98,8 +102,14 @@
     <main>
         @yield('content')
     </main>
+
+    <!-- Rodapé -->
     <footer class="py-3 text-center text-white bg-dark">
-        <p>&copy; 2025 Portal Místico | Todos os direitos reservados</p>
+        <div class="container">
+            <p>&copy; 2025 Sabedoria Ancestral. Todos os direitos reservados.</p>
+            <p><strong>📍 Endereço:</strong> Rua Dicavalcanti, 220 - Rosa dos Ventos</p>
+            <p><strong>📧 Contato:</strong> contato@ixani.com.br</p>
+        </div>
         <p><a href="privacy-policy.php" class="text-white">Política de Privacidade</a> | <a href="terms.php"
                 class="text-white">Termos de Uso</a></p>
     </footer>

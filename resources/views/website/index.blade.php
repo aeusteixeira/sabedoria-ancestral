@@ -8,83 +8,148 @@
 
 @section('content')
 <section class="container my-5">
-    <div class="mb-4 row">
+    <div class="row">
+        <div class="text-center col-lg-12">
+            <h1 class="mb-3">🔮 Bem-vindo ao Sabedoria Ancestral</h1>
+            <p class="lead">Seu portal de conhecimento esotérico, magia e espiritualidade.</p>
+        </div>
+    </div>
+
+    <div class="text-center row">
         <!-- Card da Fase da Lua -->
         <div class="mb-3 col-lg-4">
-            <div class="text-center shadow-sm card">
+            <div class="shadow-sm card">
                 <div class="card-body">
-                    <h5 class="card-title">🌙 Fase da lua hoje</h5>
+                    <h5 class="card-title">🌙 Fase da Lua Hoje</h5>
                     <p id="cardLuaTexto" class="card-text">Carregando fase da lua...</p>
-                    <a class="btn btn-outline-secondary" href="{{ route('website.calendario-lunar') }}">
+                    <a class="btn btn-primary" href="{{ route('website.calendario-lunar') }}">
                         Veja o calendário lunar
                     </a>
                 </div>
             </div>
         </div>
-        <!-- Card do planeta regente do dia -->
+
+        <!-- Card do Planeta Regente do Dia -->
         <div class="mb-3 col-lg-4">
-            <div class="text-center shadow-sm card">
+            <div class="shadow-sm card">
                 <div class="card-body">
                     <h5 class="card-title">🪐 Planeta do Dia</h5>
                     <p id="planetaDoDia" class="card-text">Carregando o planeta do dia...</p>
-                    <a class="btn btn-outline-secondary" href="{{ route('website.planetas') }}">
+                    <a class="btn btn-primary" href="{{ route('website.planetas') }}">
                         Saiba mais sobre os planetas
                     </a>
                 </div>
             </div>
         </div>
+
         <!-- Card da Hora Planetária Atual -->
         <div class="mb-3 col-lg-4">
-            <div class="text-center shadow-sm card">
+            <div class="shadow-sm card">
                 <div class="card-body">
                     <h5 class="card-title">🕰️ Hora Planetária Atual</h5>
                     <p id="cardHoraPlanetariaTexto" class="card-text">Carregando hora planetária...</p>
-                    <a class="btn btn-outline-secondary" href="{{ route('website.hora-planetaria') }}">
+                    <a class="btn btn-primary" href="{{ route('website.hora-planetaria') }}">
                         Veja o calendário completo
                     </a>
                 </div>
             </div>
         </div>
-
     </div>
+
     <div id="loading" class="my-3 text-center">Carregando dados...</div>
 </section>
 
 <!-- Seção de Práticas Espirituais -->
 <section class="py-5 bg-light">
     <div class="container">
-        <h2 class="mb-4 text-center">Práticas Espirituais</h2>
+        <h2 class="mb-4 text-center">🌀 Práticas Espirituais</h2>
         <div class="text-center row">
             <div class="mb-4 col-lg-4 col-md-6">
                 <div class="shadow-sm card">
                     <div class="card-body">
-                        <h5 class="card-title">🕯️ Velas</h5>
-                        <p class="card-text">Escolha a vela certa para suas intenções e pedidos.</p>
-                        <a href="#" class="btn btn-outline-secondary">Saiba Mais</a>
+                        <h5 class="card-title">🕯️ Consagração de Velas</h5>
+                        <p class="card-text">Saiba como consagrar velas para feitiços e rituais.</p>
+                        <a href="#" class="btn btn-secondary">Aprender</a>
                     </div>
                 </div>
             </div>
+
             <div class="mb-4 col-lg-4 col-md-6">
                 <div class="shadow-sm card">
                     <div class="card-body">
-                        <h5 class="card-title">🪨 Cristais</h5>
-                        <p class="card-text">Aprenda sobre as propriedades energéticas dos cristais.</p>
-                        <a href="#" class="btn btn-outline-secondary">Descubra</a>
+                        <h5 class="card-title">🪨 Cristais e Energias</h5>
+                        <p class="card-text">Descubra o poder dos cristais e como utilizá-los.</p>
+                        <a href="#" class="btn btn-secondary">Explorar</a>
                     </div>
                 </div>
             </div>
+
             <div class="mb-4 col-lg-4 col-md-6">
                 <div class="shadow-sm card">
                     <div class="card-body">
-                        <h5 class="card-title">🌙 Fases da Lua</h5>
-                        <p class="card-text">Entenda as influências das fases da lua em sua jornada espiritual.</p>
-                        <a href="#" class="btn btn-outline-secondary">Saiba Mais</a>
+                        <h5 class="card-title">🌿 Ervas e Magia</h5>
+                        <p class="card-text">Utilize ervas para banhos, defumações e feitiços.</p>
+                        <a href="#" class="btn btn-secondary">Saiba Mais</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Seção de Ferramentas Esotéricas -->
+<section class="container my-5">
+    <h2 class="mb-4 text-center">🛠️ Ferramentas Esotéricas</h2>
+    <div class="text-center row">
+        <div class="mb-4 col-lg-4 col-md-6">
+            <div class="shadow-sm card">
+                <div class="card-body">
+                    <h5 class="card-title">📅 Agenda Lunar</h5>
+                    <p class="card-text">Planeje seus rituais de acordo com as fases da lua.</p>
+                    <a href="#" class="btn btn-dark">Acessar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4 col-lg-4 col-md-6">
+            <div class="shadow-sm card">
+                <div class="card-body">
+                    <h5 class="card-title">📖 Grimório Online</h5>
+                    <p class="card-text">Crie seu próprio grimório digital com receitas e rituais.</p>
+                    <a href="#" class="btn btn-dark">Criar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4 col-lg-4 col-md-6">
+            <div class="shadow-sm card">
+                <div class="card-body">
+                    <h5 class="card-title">🔮 Oráculo Virtual</h5>
+                    <p class="card-text">Faça consultas gratuitas com Tarot e Baralho Cigano.</p>
+                    <a href="#" class="btn btn-dark">Consultar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Cursos e Instituto -->
+<section class="py-5 text-white bg-dark">
+    <div class="container text-center">
+        <h2 class="mb-4">🎓 Conheça Nossos Cursos</h2>
+        <p>Aprenda bruxaria, xamanismo e espiritualidade com aulas completas.</p>
+        <a href="https://ixani.com.br/cursos" class="btn btn-warning">Ver Cursos</a>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="mb-4">🏡 Instituto Xamânico Ancestral</h2>
+        <p>Conheça nosso espaço dedicado ao autoconhecimento e conexão espiritual.</p>
+        <a href="https://ixani.com.br" class="btn btn-success">Visite Nosso Instituto</a>
+    </div>
+</section>
+
 @stop
 
 @section('css')
