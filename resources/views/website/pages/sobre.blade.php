@@ -1,9 +1,9 @@
 @extends('layouts.web')
 
-@section('title', 'Sabedoria Ancestral')
+@section('title', 'Sobre o Sabedoria Ancestral')
 
 @section('subtitle')
-Conecte-se com a natureza e com o universo
+    Saiba mais sobre o nosso projeto
 @stop
 
 @section('content')

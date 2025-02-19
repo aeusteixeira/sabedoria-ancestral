@@ -1,11 +1,5 @@
 @extends('layouts.web')
 
-@section('title', 'Sabedoria Ancestral')
-
-@section('subtitle')
-    Conecte-se com a natureza e com o universo
-@stop
-
 @section('content')
 <section class="container my-5">
     <div class="row">
@@ -66,9 +60,10 @@
         <div class="text-center row">
             <div class="mb-4 col-lg-4 col-md-6">
                 <div class="shadow-sm card">
+                    <img src="https://pm1.aminoapps.com/7671/0d561b5feca0071202b2e691f48a6e9b479931dbr1-564-501v2_hq.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Imagem do card">
                     <div class="card-body">
-                        <h5 class="card-title">🕯️ Consagração de Velas</h5>
-                        <p class="card-text">Saiba como consagrar velas para feitiços e rituais.</p>
+                        <h5 class="card-title">🪄 Consagração de Objetos</h5>
+                        <p class="card-text">Aprenda a consagrar seus objetos mágicos.</p>
                         <a href="#" class="btn btn-secondary">Aprender</a>
                     </div>
                 </div>
@@ -76,6 +71,7 @@
 
             <div class="mb-4 col-lg-4 col-md-6">
                 <div class="shadow-sm card">
+                    <img src="https://i0.wp.com/oficinadasbruxas.com/wp-content/uploads/2015/08/Pedras-cristais-poder-magico.jpg?fit=1200%2C640&ssl=1" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Imagem do card">
                     <div class="card-body">
                         <h5 class="card-title">🪨 Cristais e Energias</h5>
                         <p class="card-text">Descubra o poder dos cristais e como utilizá-los.</p>
@@ -86,6 +82,7 @@
 
             <div class="mb-4 col-lg-4 col-md-6">
                 <div class="shadow-sm card">
+                    <img src="https://p2.trrsf.com/image/fget/cf/940/0/images.terra.com/2020/12/09/saiba-mais-sobre-ervas-especiarias-e-oleos-essenciais-na-magia-16479.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Imagem do card">
                     <div class="card-body">
                         <h5 class="card-title">🌿 Ervas e Magia</h5>
                         <p class="card-text">Utilize ervas para banhos, defumações e feitiços.</p>

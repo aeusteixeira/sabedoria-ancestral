@@ -1,9 +1,9 @@
 @extends('layouts.web')
 
-@section('title', 'Sabedoria Ancestral')
+@section('title', 'Catálogo de Ervas Mágicas')
 
 @section('subtitle')
-Conecte-se com a natureza e com o universo
+    Saiba mais sobre as propriedades mágicas das ervas
 @stop
 
 @section('content')
@@ -49,37 +49,44 @@ Conecte-se com a natureza e com o universo
         <!-- Seção de Listagem de Ervas -->
         <div id="herbList" class="row row-cols-1 row-cols-md-3">
             <!-- Exemplo de Card de Erva -->
+            @forelse ( $herbs as $herb)
             <div class="col">
                 <div class="shadow-sm card h-100">
-                    <img src="https://cdn.awsli.com.br/2660/2660278/produto/246588082/alecrim-folhas-100g-34ddlilbap.jpg"
+                    <img src="{{ $herb->image }}"
                          class="card-img-top"
-                         alt="Alecrim"
+                         alt="{{ $herb->name }}"
+                         title="{{ $herb->name }}"
                          style="height: 200px; object-fit: cover;">
 
                     <div class="card-body d-flex flex-column">
-                        <h5 class="text-center card-title">Alecrim</h5>
-                        <h6 class="mb-2 text-center card-subtitle text-body-secondary">🔥 Quente | ☀️ Sol </h6>
+                        <h5 class="text-center card-title">
+                            {{ $herb->name }}
+                        </h5>
+                        <h6 class="mb-2 text-center card-subtitle text-body-secondary">
+                            <span class="badge" style="{{ $herb->full_color_planet }}">
+                                {{ $herb->full_planet_name }}
+                            </span>
+                            <span class="badge {{ $herb->full_color_element }}">
+                                {{ $herb->full_element_name }}
+                            </span>
+                        </h6>
                         <hr>
                         <p class="text-justify card-text">
-                            O alecrim é uma erva quente associada ao sol e ao elemento fogo. Suas folhas possuem propriedades purificantes e energizantes, sendo utilizadas em rituais de proteção, limpeza e fortalecimento espiritual.
+                            {{ $herb->description }}
                         </p>
 
                         <ul class="list-group list-group-horizontal justify-content-center">
-                            <li class="text-center list-group-item">
-                                🍵 Chás <span class="text-white badge bg-info">4</span>
-                            </li>
-                            <li class="text-center list-group-item">
-                                🌿 Banhos <span class="text-white badge bg-info">3</span>
-                            </li>
-                            <li class="text-center list-group-item">
-                                🪄 Feitiços <span class="text-white badge bg-info">2</span>
+                            <li class="text-center list-group-item fw-bold d-flex align-items-center">
+                                🌿 {{ $herb->alchemies->count() }}
+                                {{ Str::plural('alquimia', $herb->alchemies->count()) }} associada{{ $herb->alchemies->count() > 1 ? 's' : '' }} a esta erva
                             </li>
                         </ul>
+
 
                         <hr>
 
                         <div class="mt-auto text-center">
-                            <a href="{{ route('website.erva') }}" class="btn btn-success w-100">
+                            <a href="{{ route('website.erva', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">
                                 Ver mais
                             </a>
                         </div>
@@ -88,6 +95,10 @@ Conecte-se com a natureza e com o universo
 
 
             </div>
+            @empty
+                <p>Não foram encontrados resultados para a busca.</p>
+            @endforelse
+
         </div>
 </div>
     </section>
