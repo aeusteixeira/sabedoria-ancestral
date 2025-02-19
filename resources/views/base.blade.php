@@ -3,7 +3,7 @@
 @section('title', 'Sabedoria Ancestral')
 
 @section('subtitle')
-Conecte-se com a natureza e com o universo
+    Conecte-se com a natureza e com o universo
 @stop
 
 @section('content')

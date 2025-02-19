@@ -15,6 +15,21 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        $this->call([
+            UserSeeder::class,
+            DayOfWeekSeeder::class,
+            MoonSeeder::class,
+            PlanetSeeder::class,
+            ElementSeeder::class,
+            HerbSeeder::class,
+            ChakraSeeder::class,
+            TypeStoneSeeder::class,
+            StoneSeeder::class,
+            AlchemyTypeSeeder::class,
+            AlchemySeeder::class,
+            AlchemyHerbStoneSeeder::class,
+        ]);
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',

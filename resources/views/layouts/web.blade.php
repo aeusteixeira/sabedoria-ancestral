@@ -18,7 +18,16 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('css')
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $seo['title_for_tag'] ?? 'Sabedoria Ancestral' }}</title>
+    <meta name="description" content="{{ $seo['description'] ?? 'Conecte-se com a natureza e com o universo' }}">
+    <meta name="keywords" content="{{ $seo['keywords'] ?? 'sabedoria, ancestral, natureza, universo' }}">
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="{{ $seo['og']['title'] ?? 'Sabedoria Ancestral' }}">
+    <meta property="og:description" content="{{ $seo['og']['description'] ?? 'Conecte-se com a natureza e com o universo' }}">
+    <meta property="og:image" content="{{ $seo['og']['image'] ?? asset('images/default-image.jpg') }}">
+    <meta property="og:url" content="{{ $seo['og']['url'] ?? url('/') }}">
+    <meta property="og:type" content="website">
 </head>
 
 <body>
@@ -89,16 +98,16 @@
         </div>
     </nav>
 
-
     <header class="py-5 text-center text-light">
         <h1 id="title-header">
-            @yield('title')
+            {{ $seo['title'] }}
         </h1>
         <p id="subtitle-header">
-            @yield('subtitle')
+            {{ $seo['description'] }}
         </p>
         @yield('content_header')
     </header>
+
     <main>
         @yield('content')
     </main>
