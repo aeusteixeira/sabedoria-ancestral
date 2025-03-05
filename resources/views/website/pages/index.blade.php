@@ -69,7 +69,7 @@
                             @foreach ($herbSet as $herb)
                                 <div class="col-md-4">
                                     <div class="mb-4 border-0 shadow-sm card h-100">
-                                        <img src="{{ $herb->image }}" class="card-img-top rounded-top"
+                                        <img src="{{ $herb->image_url }}" class="card-img-top rounded-top"
                                             alt="{{ $herb->name }}" title="{{ $herb->name }}"
                                             style="height: 200px; object-fit: cover;">
                                         <div class="card-body d-flex flex-column">
@@ -93,7 +93,7 @@
                                             <hr>
 
                                             <div class="mt-auto text-center">
-                                                <a href="{{ route('website.erva', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">
+                                                <a href="{{ route('website.herb.show', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">
                                                     ✨ Ver Detalhes
                                                 </a>
                                             </div>
@@ -117,7 +117,7 @@
             </button>
         </div>
 
-        <a href="{{ route('website.ervas') }}" class="mt-4 btn btn-primary">
+        <a href="{{ route('website.herb.index') }}" class="mt-4 btn btn-primary">
             🔍 Ver Todas as ervas
         </a>
     </div>
@@ -138,7 +138,7 @@
                             @foreach ($alchemySet as $alchemy)
                                 <div class="col-md-4">
                                     <div class="mb-4 border-0 shadow-sm card h-100">
-                                        <img src="{{ $alchemy->image }}" class="card-img-top rounded-top"
+                                        <img src="{{ $alchemy->image_url }}" class="card-img-top rounded-top"
                                             alt="{{ $alchemy->name }}" title="{{ $alchemy->name }}"
                                             style="height: 200px; object-fit: cover;">
                                         <div class="card-body d-flex flex-column">
@@ -157,13 +157,13 @@
                                             <hr>
 
                                             <p class="text-muted text-start">
-                                                {{ Str::limit($alchemy->description, 120) }}
+                                                {!! Str::limit($alchemy->description, 120) !!}
                                             </p>
 
                                             <hr>
 
                                             <div class="mt-auto text-center">
-                                                <a href="{{ route('website.alquimia', ['slug' => $alchemy->slug]) }}" class="btn btn-success w-100">
+                                                <a href="{{ route('website.alchemy.show', ['slug' => $alchemy->slug]) }}" class="btn btn-success w-100">
                                                     ✨ Ver Detalhes
                                                 </a>
                                             </div>
@@ -187,7 +187,7 @@
             </button>
         </div>
 
-        <a href="{{ route('website.alquimias') }}" class="mt-4 btn btn-primary">
+        <a href="{{ route('website.alchemy.index') }}" class="mt-4 btn btn-primary">
             🔍 Ver Todas as Alquimias
         </a>
     </div>

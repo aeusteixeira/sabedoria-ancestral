@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Dotenv\Util\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class Herb extends Model
 {
@@ -24,6 +27,16 @@ class Herb extends Model
         'temperature_regent_id',
         'user_id'
     ];
+
+    // Adiciona o slug automatamente
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->slug = \Illuminate\Support\Str::slug($model->name);
+            $model->user_id = Auth::user()->id;
+        });
+    }
 
     public function user()
     {
@@ -54,24 +67,13 @@ class Herb extends Model
     {
         return $this->belongsTo(Temperature::class, 'temperature_regent_id');
     }
-
-    public function getFullElementNameAttribute()
+    public function getImageUrlAttribute()
     {
-        return $this->element->symbol . ' ' . $this->element->name;
-    }
+        if ($this->image) {
+            return Storage::url($this->image);
+        }
 
-    public function getFullPlanetNameAttribute()
-    {
-        return $this->planet->symbol . ' ' . $this->planet->name;
-    }
-
-    public function getFullColorElementAttribute()
-    {
-        return 'bg-' . $this->element->color . ' text-' . $this->element->color_text;
-    }
-
-    public function getFullColorPlanetAttribute()
-    {
-        return 'background-color: ' . $this->planet->color . '; color: ' . $this->planet->color_text . '; border-color: ' . $this->planet->color_text . ' 1px;';
+        $text = urlencode($this->name);
+        return "https://placehold.co/600x400?text=" . $text;
     }
 }

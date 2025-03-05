@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
+            BadgeSeeder::class,
             UserSeeder::class,
             TemperatureSeeder::class,
             DayOfWeekSeeder::class,
@@ -30,7 +31,8 @@ class DatabaseSeeder extends Seeder
             AlchemyTypeSeeder::class,
             AlchemySeeder::class,
             AlchemyHerbStoneSeeder::class,
-            ChakraHerb::class
+            ChakraHerb::class,
+            ServiceSeeder::class
         ]);
 
         User::factory()->create([

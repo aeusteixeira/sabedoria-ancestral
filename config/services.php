@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'plantnet' => [
+        'api_key' => env('PLANTNET_API_KEY'),
+    ],
+
+
 ];

@@ -7,14 +7,14 @@
             <div class="row">
                 <!-- Imagem da Receita + Avaliação -->
                 <div class="col-md-4 d-flex flex-column align-items-center">
-                    <img src="{{ $alchemy->image }}" class="rounded shadow-sm card-img-top"
+                    <img src="{{ $alchemy->image_url }}" class="rounded shadow-sm card-img-top"
                         style="max-width: 100%; height: auto; object-fit: cover; border-radius: 12px;"
                         alt="{{ $alchemy->name }}" title="{{ $alchemy->name }}">
 
                     <!-- Avaliação e Comentários -->
                     <div class="mt-3 text-center w-100">
                         <h5 class="text-primary">⭐ Avaliações</h5>
-                        <p class="text-secondary">Média: ★★★★☆ (4.5/5)</p>
+                        <p class="text-secondary">Média: {{ $alchemy->rating }} / 5</p>
                         <a class="btn btn-sm btn-warning" href="#comentarios">Deixar Avaliação</a>
                     </div>
 
@@ -46,7 +46,7 @@
                     </div>
 
                     <p class="mt-3 text-justify text-muted">
-                        {{ $alchemy->description }}
+                        {!! $alchemy->description !!}
                     </p>
 
                     <!-- Ingredientes Alquímicos -->
@@ -92,13 +92,13 @@
                     <!-- Preparo -->
                     <div class="mt-3">
                         <h5 class="text-primary" id="preparo">🥄 Preparo</h5>
-                        <p class="text-secondary">{{ $alchemy->preparation_method }}</p>
+                        <p class="text-secondary">{!! $alchemy->preparation_method !!}</p>
                     </div>
 
                     <!-- Precauções -->
                     <div class="mt-3">
                         <h5 class="text-danger">⚠️ Precauções</h5>
-                        <p class="text-secondary">{{ $alchemy->precautions }}</p>
+                        <p class="text-secondary">{!! $alchemy->precautions !!}</p>
                     </div>
 
                     <!-- Aviso Importante -->
@@ -127,7 +127,7 @@
         <div class="card-body">
             <h4 class="mb-4 text-center fw-bold">💬 Comentários e Avaliações</h4>
             @auth
-            <form action="{{ route('website.comentar', $alchemy->id) }}" method="POST">
+            <form action="{{ route('website.alchemy.comment', $alchemy->id) }}" method="POST">
                 <input type="hidden" name="alchemy_id" value="{{ $alchemy->id }}">
                 @csrf
                     <div class="mb-3">
@@ -175,7 +175,7 @@
             <hr class="my-4">
 
             <!-- Comentários -->
-            @foreach ($alchemy->comments as $comment)
+            @forelse ($alchemy->comments as $comment)
                 @if ($comment->parent_id == null)
                     <div class="mb-3 shadow-sm card">
                         <div class="card-body">
@@ -214,7 +214,7 @@
 
                             <!-- Campo de resposta escondido inicialmente -->
                             <div class="mt-3 reply-box d-none" id="reply-box-{{ $comment->id }}">
-                                <form action="{{ route('website.comentar', $alchemy->id) }}" method="POST">
+                                <form action="{{ route('website.alchemy.comment', $alchemy->id) }}" method="POST">
                                     <input type="hidden" name="alchemy_id" value="{{ $alchemy->id }}">
                                     @csrf
                                     <input type="hidden" name="parent_id" value="{{ $comment->id }}">
@@ -254,13 +254,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                        @endforeach
-
+                                    @endforeach
                             @endif
                         </div>
                     </div>
                 @endif
-            @endforeach
+            @empty
+                <p class="text-center text-muted">
+                    Opa, parece que ninguém comentou ainda! Que tal ser o primeiro?
+                </p>
+            @endforelse
 
         </div>
     </div>

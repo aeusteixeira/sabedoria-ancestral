@@ -13,7 +13,7 @@ Conecte-se com a natureza e com o universo
             <div class="row">
                 <!-- Imagem da Erva + Avaliação -->
                 <div class="col-md-4 d-flex flex-column align-items-center">
-                    <img src="{{ $herb->image }}" class="rounded shadow-sm card-img-top"
+                    <img src="{{ $herb->image_url }}" class="rounded shadow-sm card-img-top"
                         style="max-width: 100%; height: auto; object-fit: cover; border-radius: 12px;"
                         alt="{{ $herb->name }}" title="{{ $herb->name }}">
 
@@ -36,7 +36,7 @@ Conecte-se com a natureza e com o universo
                     </h2>
 
                     <p class="mt-3 text-justify text-muted">
-                        {{ $herb->description }}
+                        {!! $herb->description !!}
                     </p>
 
                     <div class="mt-3 row">
@@ -74,7 +74,7 @@ Conecte-se com a natureza e com o universo
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
 
@@ -122,7 +122,7 @@ Conecte-se com a natureza e com o universo
                 @forelse ($herb->alchemies as $alchemie)
                     <div class="mb-2 col-sm-12 col-md-6 col-lg-4">
                         <div class="border-0 shadow-sm card h-100">
-                            <img src="{{ $alchemie->image ?? 'https://cdn.awsli.com.br/2660/2660278/produto/246588082/alecrim-folhas-100g-34ddlilbap.jpg' }}"
+                            <img src="{{ $alchemie->image_url }}"
                                  class="card-img-top rounded-top"
                                  alt="{{ $alchemie->name }}"
                                  style="height: 200px; object-fit: cover;">
@@ -141,7 +141,7 @@ Conecte-se com a natureza e com o universo
                                     {{ Str::limit($alchemie->description, 100) }}
                                 </p>
                                 <div class="mt-auto text-center">
-                                    <a class="btn btn-success w-100" href="{{ route('website.alquimia', ['slug' => $alchemie->slug]) }}">
+                                    <a class="btn btn-success w-100" href="{{ route('website.alchemy.show', ['slug' => $alchemie->slug]) }}">
                                         Ver mais
                                     </a>
                                 </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Alchemy extends Model
 {
@@ -30,14 +31,9 @@ class Alchemy extends Model
         return $this->belongsTo(Moon::class);
     }
 
-    /**
-     * Get the day of the week that the alchemy is associated with
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function dayOfWeek()
     {
-        return $this->belongsTo(DayOfWeek::class);
+        return $this->belongsTo(DayOfWeek::class, 'day_of_week_id');
     }
 
     public function hour()
@@ -48,6 +44,16 @@ class Alchemy extends Model
     public function alchemyType()
     {
         return $this->belongsTo(AlchemyType::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return Storage::url($this->image);
+        }
+
+        $text = urlencode($this->name);
+        return "https://placehold.co/600x400?text=" . $text;
     }
 
     public function herbs()
