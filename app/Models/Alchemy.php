@@ -65,6 +65,11 @@ class Alchemy extends Model
         return $this->belongsToMany(Element::class, 'alchemy_element');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function getFullTypeNameAttribute()
     {
         return $this->alchemyType->symbol . ' ' . $this->alchemyType->name;

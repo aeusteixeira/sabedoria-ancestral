@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCommentRequest;
 use App\Models\Alchemy;
 use App\Models\AlchemyType;
+use App\Models\Comment;
 use App\Models\DayOfWeek;
 use App\Models\Element;
 use App\Models\Herb;
@@ -11,6 +13,7 @@ use App\Models\Moon;
 use App\Models\Planet;
 use App\Models\Temperature;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WebsiteController extends Controller
 {
@@ -98,7 +101,7 @@ class WebsiteController extends Controller
     {
         $seo = $this->generateSeo(
             '🌿 Catálogo de Ervas Mágicas',
-            'As ervas possuem energias únicas que podem ser utilizadas em rituais, feitiços e práticas espirituais. 
+            'As ervas possuem energias únicas que podem ser utilizadas em rituais, feitiços e práticas espirituais.
             Explore este guia e descubra como incorporá-las em sua jornada mística.',
             ['ervas', 'magia natural', 'cura', 'rituais'],
             'website.ervas'
@@ -174,38 +177,38 @@ class WebsiteController extends Controller
             ['alquimias', 'magia natural', 'cura', 'rituais', 'ervas'],
             'website.alquimias'
         );
-    
+
         // Puxa os dados para preencher os selects
         $alquemyTypes = AlchemyType::all();
         $moons = Moon::all();
         $days = DayOfWeek::all();
-    
+
         // Inicia a query base
         $query = Alchemy::query();
-    
+
         // Filtro por nome da alquimia
         if ($request->filled('searchAlchemy')) {
             $query->where('name', 'LIKE', '%' . $request->searchAlchemy . '%');
         }
-    
+
         // Filtro por tipo de alquimia
         if ($request->filled('alchemyTypeSelect')) {
             $query->where('alchemy_type_id', $request->alchemyTypeSelect);
         }
-    
+
         // Filtro por fase da lua
         if ($request->filled('moonPhaseSelect')) {
             $query->where('moon_id', $request->moonPhaseSelect);
         }
-    
+
         // Filtro por dia da semana
         if ($request->filled('dayOfWeekSelect')) {
             $query->where('day_of_week_id', $request->dayOfWeekSelect);
         }
-    
+
         // Obtém os resultados filtrados
         $alchemies = $query->paginate(12); // Paginação para evitar carregamento excessivo
-    
+
         return view('website.alquimia.index', [
             'seo' => $seo,
             'alchemies' => $alchemies,
@@ -214,7 +217,7 @@ class WebsiteController extends Controller
             'days' => $days
         ]);
     }
-    
+
 
     public function alquimia($slug)
     {
@@ -233,6 +236,20 @@ class WebsiteController extends Controller
             'seo' => $seo
         ]);
     }
+
+    public function comment(StoreCommentRequest $request)
+    {
+        Comment::create([
+            'user_id' => Auth::user()->id,
+            'alchemy_id' => $request->alchemy_id, // ID da alquimia associada
+            'content' => $request->content, // Texto do comentário
+            'rating' => $request->rating, // Avaliação por estrelas
+            'parent_id' => $request->parent_id, // Se for uma resposta, associa ao comentário original
+        ]);
+
+        return back()->with('success', 'Comentário enviado com sucesso!');
+    }
+
 
     public function sobre()
     {

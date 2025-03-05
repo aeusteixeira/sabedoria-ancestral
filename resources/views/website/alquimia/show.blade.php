@@ -15,7 +15,7 @@
                     <div class="mt-3 text-center w-100">
                         <h5 class="text-primary">⭐ Avaliações</h5>
                         <p class="text-secondary">Média: ★★★★☆ (4.5/5)</p>
-                        <button class="btn btn-sm btn-warning">Deixar Avaliação</button>
+                        <a class="btn btn-sm btn-warning" href="#comentarios">Deixar Avaliação</a>
                     </div>
 
                     <!-- Botões de Interação -->
@@ -118,100 +118,213 @@
                 <p class="mb-0">
                     Publicado por: <a href="#" class="fw-bold text-decoration-none">{{ $alchemy->user->name }}</a>
                     | Publicado em: <span class="fw-semibold">{{ $alchemy->created_at->format('d/m/Y') }}</span>
-                    | Revisado por <span class="fw-semibold">2 pessoas</span>.
                 </p>
             </div>
         </div>
     </div>
 
-
-
-
-    <div class="rounded shadow-sm card">
+    <div class="rounded shadow-sm card" id="comentarios">
         <div class="card-body">
-            <h4 class="mb-4 text-center fw-bold">💬 Comentários</h4>
-
-            <!-- Campo de comentário -->
+            <h4 class="mb-4 text-center fw-bold">💬 Comentários e Avaliações</h4>
             @auth
-            <div class="mb-3">
-                <textarea class="form-control" placeholder="Deixe seu comentário..." rows="3"></textarea>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="px-4 btn btn-primary">
-                    Comentar
-                </button>
-            </div>
+            <form action="{{ route('website.comentar', $alchemy->id) }}" method="POST">
+                <input type="hidden" name="alchemy_id" value="{{ $alchemy->id }}">
+                @csrf
+                    <div class="mb-3">
+                        <textarea class="form-control" name="content" placeholder="Deixe seu comentário..." rows="3"></textarea>
+                    </div>
+
+                    <!-- Avaliação com estrelas -->
+                    <div class="mb-3">
+                        <label class="d-block">
+                            Avaliação:
+                        </label>
+                        <div class="rating">
+                            <input type="radio" name="rating" id="star5" value="5"><label for="star5">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            <input type="radio" name="rating" id="star4" value="4"><label for="star4">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            <input type="radio" name="rating" id="star3" value="3"><label for="star3">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            <input type="radio" name="rating" id="star2" value="2"><label for="star2">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            <input type="radio" name="rating" id="star1" value="1"><label for="star1">
+                                <i class="fas fa-star"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="px-4 btn btn-primary">Comentar</button>
+                    </div>
+                </form>
             @else
-            <div class="d-flex justify-content-center">
-                <p>
-                    <a href="{{ route('login') }}" class="fw-semibold text-decoration-none">
-                        Faca login para comentar
-                    </a>
-                </p>
-            </div>
+                <div class="d-flex justify-content-center">
+                    <p>
+                        <a href="{{ route('login') }}" class="fw-semibold text-decoration-none">
+                            Faça login para comentar e avaliar
+                        </a>
+                    </p>
+                </div>
             @endauth
 
             <hr class="my-4">
 
-            <!-- Comentário -->
-            <div class="mb-3 shadow-sm card">
-                <div class="card-body">
-                    <div class="mb-2 d-flex align-items-center">
-                        <img src="https://picsum.photos/50" class="rounded-circle me-3" alt="User Image">
-                        <div>
-                            <h6 class="mb-0">
-                                <a href="#" class="text-decoration-none text-dark fw-semibold">
-                                    Pablo Marinho
-                                </a>
-                            </h6>
-                            <small class="text-muted">2h atrás</small>
-                        </div>
-                    </div>
-                    <p class="mb-2">
-                        Amei! Obrigado pelo compartilhamento!
-                    </p>
-
-                    <div class="mt-3 d-flex align-items-center">
-                        <a href="#" class="text-danger text-decoration-none me-3">
-                            <i class="fas fa-heart me-1"></i> 12
-                        </a>
-                    </div>
-                    <div class="card" id="respostas">
+            <!-- Comentários -->
+            @foreach ($alchemy->comments as $comment)
+                @if ($comment->parent_id == null)
+                    <div class="mb-3 shadow-sm card">
                         <div class="card-body">
                             <div class="mb-2 d-flex align-items-center">
-                                <img src="https://picsum.photos/50" class="rounded-circle me-3" alt="User Image">
+                                <img src="{{ $comment->user->profile_image }}" class="rounded-circle me-3" alt="{{ $comment->user->name }}" style="width: 60px; height: 60px;">
                                 <div>
                                     <h6 class="mb-0">
-                                        <a href="#" class="text-decoration-none text-dark fw-semibold">Matheus Teixeira
-                                            <span class="badge bg-primary">Autor</span></a>
+                                        <a href="#" class="text-decoration-none text-dark fw-semibold">
+                                            {{ $comment->user->name }}
+
+                                            @if ($comment->user->id == auth()->id())
+                                                <span class="badge bg-secondary">Você</span>
+                                            @endif
+                                        </a>
                                     </h6>
-                                    <small class="text-muted">2h atrás</small>
+                                    <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
                                 </div>
                             </div>
-                            <p class="mb-2">
-                                Bixa! Você por aqui!
-                            </p>
 
-                            <div class="mt-3 d-flex align-items-center"></div>
-                            <a href="#" class="text-danger text-decoration-none me-3">
-                                <i class="fas fa-heart me-1"></i> 12
-                            </a>
+                            <!-- Exibir estrelas de avaliação -->
+                            <div class="mb-2">
+                                {!! str_repeat('⭐', $comment->rating) !!}
+                            </div>
+
+                            <p class="mb-2">{{ $comment->content }}</p>
+
+                            <div class="mt-3 d-flex align-items-center">
+                                <a href="#" class="text-danger text-decoration-none me-3 like-comment" data-id="{{ $comment->id }}">
+                                    <i class="fas fa-heart me-1"></i> {{ $comment->likes_count ?? 0 }}
+                                </a>
+
+                                <a href="#" class="text-primary text-decoration-none me-3 reply-btn" data-id="{{ $comment->id }}">
+                                    <i class="fas fa-reply"></i> Responder
+                                </a>
+                            </div>
+
+                            <!-- Campo de resposta escondido inicialmente -->
+                            <div class="mt-3 reply-box d-none" id="reply-box-{{ $comment->id }}">
+                                <form action="{{ route('website.comentar', $alchemy->id) }}" method="POST">
+                                    <input type="hidden" name="alchemy_id" value="{{ $alchemy->id }}">
+                                    @csrf
+                                    <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                                    <textarea class="form-control" name="content" placeholder="Escreva sua resposta..." rows="2"></textarea>
+                                    <div class="mt-2 text-end">
+                                        <button type="submit" class="btn btn-sm btn-primary">Enviar Resposta</button>
+                                        <button type="button" class="btn btn-sm btn-secondary close-reply" data-id="{{ $comment->id }}">Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Respostas aos comentários -->
+                            @if ($comment->replies->count() > 0)
+
+                                        @foreach ($comment->replies as $reply)
+                                        <div class="mt-2 card bg-light" id="respostas">
+                                            <div class="card-body">
+                                            <div class="mb-2 d-flex align-items-center">
+                                                <img src="{{ $reply->user->profile_image }}" class="rounded-circle me-3" alt="{{ $reply->user->name }}" style="width: 60px; height: 60px;">
+                                                <div>
+                                                    <h6 class="mb-0">
+                                                        <a href="#" class="text-decoration-none text-dark fw-semibold">
+                                                            {{ $reply->user->name }}
+                                                            @if($reply->user->id == $alchemy->user_id)
+                                                                <span class="badge bg-primary">Autor</span>
+                                                            @endif
+                                                        </a>
+                                                    </h6>
+                                                    <small class="text-muted">{{ $reply->created_at->diffForHumans() }}</small>
+                                                </div>
+                                            </div>
+                                            <p class="mb-2">{{ $reply->content }}</p>
+                                            <div class="mt-3 d-flex align-items-center">
+                                                <a href="#" class="text-danger text-decoration-none me-3">
+                                                    <i class="fas fa-heart me-1"></i> {{ $reply->likes_count ?? 0 }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        @endforeach
+
+                            @endif
                         </div>
                     </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
 
         </div>
     </div>
+
 
 </section>
 @stop
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/ervas.css') }}">
 <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
+
+    <!-- Estilos para as estrelas -->
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: start;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        font-size: 1rem;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .rating input:checked ~ label {
+        color: gold;
+    }
+</style>
 @stop
 
 @section('js')
 <script src="{{ asset('js/ervas.js') }}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Quando clicar no botão "Responder"
+        document.querySelectorAll('.reply-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                let commentId = this.getAttribute('data-id');
+                let replyBox = document.getElementById(`reply-box-${commentId}`);
+
+                // Esconde todos os outros reply-box antes de exibir o atual
+                document.querySelectorAll('.reply-box').forEach(box => box.classList.add('d-none'));
+
+                // Exibe o campo de resposta
+                replyBox.classList.remove('d-none');
+            });
+        });
+
+        // Quando clicar no botão "Cancelar"
+        document.querySelectorAll('.close-reply').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                let commentId = this.getAttribute('data-id');
+                let replyBox = document.getElementById(`reply-box-${commentId}`);
+                replyBox.classList.add('d-none');
+            });
+        });
+    });
+</script>
+
 @stop

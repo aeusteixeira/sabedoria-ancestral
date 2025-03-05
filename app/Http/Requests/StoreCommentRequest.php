@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCommentRequest extends FormRequest
 {
@@ -11,7 +12,11 @@ class StoreCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        if (Auth::guest()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -21,8 +26,12 @@ class StoreCommentRequest extends FormRequest
      */
     public function rules(): array
     {
+        //dd($this->all());
         return [
-            //
+            'content' => 'required|string|max:1000',
+            'rating' => 'nullable|integer|min:1|max:5',
+            'alchemy_id' => 'required|exists:alchemies,id',
+            'parent_id' => 'nullable|exists:comments,id',
         ];
     }
 }

@@ -15,6 +15,7 @@ class Comment extends Model
         'alchemy_id',
         'content',
         'rating',
+        'parent_id',
     ];
 
     public function user()
@@ -25,5 +26,10 @@ class Comment extends Model
     public function alchemy()
     {
         return $this->belongsTo(Alchemy::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 }
