@@ -50,9 +50,151 @@
 
     <div id="loading" class="my-3 text-center">Carregando dados...</div>
 </section>
+<!-- Seção de Ervas -->
+<section class="py-5 mb-3 shadow-sm bg-green-2 rounded-3">
+    <div class="container text-center">
+        <h2 class="mb-4 fw-bold">
+            🌿 Catálogo de ervas
+        </h2>
+        <p class="text-muted">
+            As ervas podem ajudar a potencializar os rituais e aumentar a energia dos feitiços. Explore e descubra o poder das ervas.
+        </p>
+
+        <!-- Carrossel -->
+        <div id="alchemyCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach ($herbs->chunk(3) as $index => $herbSet)
+                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                        <div class="row justify-content-center">
+                            @foreach ($herbSet as $herb)
+                                <div class="col-md-4">
+                                    <div class="mb-4 border-0 shadow-sm card h-100">
+                                        <img src="{{ $herb->image }}" class="card-img-top rounded-top"
+                                            alt="{{ $herb->name }}" title="{{ $herb->name }}"
+                                            style="height: 200px; object-fit: cover;">
+                                        <div class="card-body d-flex flex-column">
+                                            <h5 class="text-center card-title fw-bold text-dark">
+                                                {{ $herb->name }}
+                                            </h5>
+
+                                            <!-- Badge da Categoria -->
+                                            <h6 class="flex-wrap gap-2 mb-2 text-center card-subtitle text-body-secondary d-flex justify-content-center">
+                                                <x-badge :content="$herb->temperature->name" :colorBackground="$herb->temperature->color_background" :colorText="$herb->temperature->color_text" :icon="$herb->temperature->symbol" />
+                                                    <x-badge :content="$herb->planet->name" :colorBackground="$herb->planet->color_background" :colorText="$herb->planet->color_text" :icon="$herb->planet->symbol" />
+                                                    <x-badge :content="$herb->element->name" :colorBackground="$herb->element->color_background" :colorText="$herb->element->color_text" :icon="$herb->element->symbol" />
+                                            </h6>
+
+                                            <hr>
+
+                                            <p class="text-muted text-start">
+                                                {{ Str::limit($herb->description, 120) }}
+                                            </p>
+
+                                            <hr>
+
+                                            <div class="mt-auto text-center">
+                                                <a href="{{ route('website.erva', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">
+                                                    ✨ Ver Detalhes
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- Controles do Carrossel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#alchemyCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#alchemyCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+        </div>
+
+        <a href="{{ route('website.ervas') }}" class="mt-4 btn btn-primary">
+            🔍 Ver Todas as ervas
+        </a>
+    </div>
+</section>
+<section class="py-5 mb-3 shadow-sm bg-light rounded-3">
+    <div class="container text-center">
+        <h2 class="mb-4 fw-bold">🔮 Últimas Alquimias</h2>
+        <p class="text-muted">
+            As alquimias combinam ervas, cristais, planetas e fases lunares para potencializar feitiços e práticas espirituais. Descubra combinações mágicas que ampliam a energia dos rituais.
+        </p>
+
+        <!-- Carrossel -->
+        <div id="alchemyCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach ($alchemies->chunk(3) as $index => $alchemySet)
+                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                        <div class="row justify-content-center">
+                            @foreach ($alchemySet as $alchemy)
+                                <div class="col-md-4">
+                                    <div class="mb-4 border-0 shadow-sm card h-100">
+                                        <img src="{{ $alchemy->image }}" class="card-img-top rounded-top"
+                                            alt="{{ $alchemy->name }}" title="{{ $alchemy->name }}"
+                                            style="height: 200px; object-fit: cover;">
+                                        <div class="card-body d-flex flex-column">
+                                            <h5 class="text-center card-title fw-bold text-dark">
+                                                {{ $alchemy->name }}
+                                            </h5>
+
+                                            <!-- Badge da Categoria -->
+                                            <h6 class="flex-wrap gap-2 mb-2 text-center card-subtitle text-body-secondary d-flex justify-content-center">
+                                                <x-badge :content="$alchemy->alchemyType->name"
+                                                    :colorBackground="$alchemy->alchemyType->color_background"
+                                                    :colorText="$alchemy->alchemyType->color_text"
+                                                    :icon="$alchemy->alchemyType->symbol" />
+                                            </h6>
+
+                                            <hr>
+
+                                            <p class="text-muted text-start">
+                                                {{ Str::limit($alchemy->description, 120) }}
+                                            </p>
+
+                                            <hr>
+
+                                            <div class="mt-auto text-center">
+                                                <a href="{{ route('website.alquimia', ['slug' => $alchemy->slug]) }}" class="btn btn-success w-100">
+                                                    ✨ Ver Detalhes
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- Controles do Carrossel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#alchemyCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#alchemyCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+        </div>
+
+        <a href="{{ route('website.alquimias') }}" class="mt-4 btn btn-primary">
+            🔍 Ver Todas as Alquimias
+        </a>
+    </div>
+</section>
 
 <!-- Seção de Cursos e Instituto -->
-<section class="py-5 text-white bg-dark">
+<section class="py-5 mb-3 text-white shadow-sm bg-dark rounded-3">
     <div class="container text-center">
         <h2 class="mb-4">🎓 Conheça Nossos Cursos</h2>
         <p>Aprenda bruxaria, xamanismo e espiritualidade com aulas completas.</p>
@@ -60,7 +202,7 @@
     </div>
 </section>
 
-<section class="py-5 bg-light">
+<section class="py-5 mb-3 shadow-sm bg-light rounded-3">
     <div class="container text-center">
         <h2 class="mb-4">🏡 Instituto Xamânico Ancestral</h2>
         <p>Conheça nosso espaço dedicado ao autoconhecimento e conexão espiritual.</p>

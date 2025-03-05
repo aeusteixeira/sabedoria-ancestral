@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alchemy;
+use App\Models\AlchemyType;
+use App\Models\DayOfWeek;
+use App\Models\Element;
 use App\Models\Herb;
+use App\Models\Moon;
+use App\Models\Planet;
+use App\Models\Temperature;
 use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
@@ -37,7 +43,14 @@ class WebsiteController extends Controller
             'website.index'
         );
 
-        return view('website.pages.index', compact('seo'));
+        $herbs = Herb::all();
+        $alchemies = Alchemy::orderBy('created_at', 'desc')->limit(3)->get();
+
+        return view('website.pages.index', [
+            'seo' => $seo,
+            'herbs' => $herbs,
+            'alchemies' => $alchemies
+        ]);
     }
 
     public function horaPlanetaria()
@@ -81,7 +94,7 @@ class WebsiteController extends Controller
         return view('website.tools.planetas', compact('seo'));
     }
 
-    public function ervas()
+    public function ervas(Request $request)
     {
         $seo = $this->generateSeo(
             '🌿 Catálogo de Ervas Mágicas',
@@ -91,11 +104,49 @@ class WebsiteController extends Controller
             'website.ervas'
         );
 
-        $herbs = Herb::all();
+        // Puxa os dados para preencher os selects
+        $planets = Planet::all();
+        $temperatures = Temperature::all();
+        $elements = Element::all();
+
+        // Inicia a query base
+        $query = Herb::query();
+
+        // Filtro por nome
+        if ($request->filled('searchName')) {
+            $query->where('name', 'LIKE', '%' . $request->searchName . '%');
+        }
+
+        // Filtro por tipo (morna, fria, quente)
+        if ($request->filled('typeSelect')) {
+            $query->whereHas('temperature', function ($q) use ($request) {
+                $q->where('id', $request->typeSelect);
+            });
+        }
+
+        // Filtro por planeta regente
+        if ($request->filled('planetSelect')) {
+            $query->whereHas('planet', function ($q) use ($request) {
+                $q->where('id', $request->planetSelect);
+            });
+        }
+
+        // Filtro por elemento
+        if ($request->filled('elementSelect')) {
+            $query->whereHas('element', function ($q) use ($request) {
+                $q->where('id', $request->elementSelect);
+            });
+        }
+
+        // Obtém os resultados filtrados
+        $herbs = $query->paginate(12); // Paginação para evitar carregamento excessivo
 
         return view('website.ervas.index', [
             'seo' => $seo,
-            'herbs' => $herbs
+            'herbs' => $herbs,
+            'planets' => $planets,
+            'temperatures' => $temperatures,
+            'elements' => $elements
         ]);
     }
 
@@ -115,7 +166,7 @@ class WebsiteController extends Controller
         return view('website.ervas.show', compact('herb', 'seo'));
     }
 
-    public function alquimias()
+    public function alquimias(Request $request)
     {
         $seo = $this->generateSeo(
             '🔮 Catálogo de Alquimias e Magia Natural',
@@ -123,14 +174,47 @@ class WebsiteController extends Controller
             ['alquimias', 'magia natural', 'cura', 'rituais', 'ervas'],
             'website.alquimias'
         );
-
-        $alchemies = Alchemy::all();
-
+    
+        // Puxa os dados para preencher os selects
+        $alquemyTypes = AlchemyType::all();
+        $moons = Moon::all();
+        $days = DayOfWeek::all();
+    
+        // Inicia a query base
+        $query = Alchemy::query();
+    
+        // Filtro por nome da alquimia
+        if ($request->filled('searchAlchemy')) {
+            $query->where('name', 'LIKE', '%' . $request->searchAlchemy . '%');
+        }
+    
+        // Filtro por tipo de alquimia
+        if ($request->filled('alchemyTypeSelect')) {
+            $query->where('alchemy_type_id', $request->alchemyTypeSelect);
+        }
+    
+        // Filtro por fase da lua
+        if ($request->filled('moonPhaseSelect')) {
+            $query->where('moon_id', $request->moonPhaseSelect);
+        }
+    
+        // Filtro por dia da semana
+        if ($request->filled('dayOfWeekSelect')) {
+            $query->where('day_of_week_id', $request->dayOfWeekSelect);
+        }
+    
+        // Obtém os resultados filtrados
+        $alchemies = $query->paginate(12); // Paginação para evitar carregamento excessivo
+    
         return view('website.alquimia.index', [
             'seo' => $seo,
-            'alchemies' => $alchemies
+            'alchemies' => $alchemies,
+            'alquemyTypes' => $alquemyTypes,
+            'moons' => $moons,
+            'days' => $days
         ]);
     }
+    
 
     public function alquimia($slug)
     {

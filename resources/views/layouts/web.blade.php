@@ -28,10 +28,10 @@
     <meta property="og:type" content="website">
 </head>
 
-<body>
+<body class="bg-green-1">
     <nav class="shadow-sm navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ route('website.index') }}">Sabedoria Ancestral</a>
+            <a class="navbar-brand site-title" href="{{ route('website.index') }}">Sabedoria Ancestral</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

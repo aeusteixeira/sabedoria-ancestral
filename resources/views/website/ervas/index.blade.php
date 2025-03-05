@@ -1,76 +1,90 @@
 @extends('layouts.web')
 
 @section('content')
-<section  >
+<section >
 
     <x-header-page
         :title="$seo['title']"
         :description="$seo['description']"
     />
 
-    <!-- Seção de Filtros -->
-    <div class="p-4 mb-4 rounded shadow-sm bg-light">
-        <form id="filterForm" class="row g-3">
-            <div class="col-md-4">
+    <section class="p-4 mb-4 rounded shadow-sm bg-light">
+        <form id="filterForm" class="row g-3" method="GET" action="{{ route('website.ervas') }}">
+            <div class="col-md-12">
                 <label for="searchName" class="form-label fw-semibold">🔍 Nome da Erva</label>
-                <input type="text" class="form-control" id="searchName" placeholder="Digite o nome da erva">
+                <input type="text" class="form-control" id="searchName" name="searchName" 
+                       placeholder="Digite o nome da erva" value="{{ request('searchName') }}">
             </div>
+    
             <div class="col-md-4">
-                <label for="typeSelect" class="form-label fw-semibold">🌡️ Tipo de Erva</label>
-                <select id="typeSelect" class="form-select">
+                <label for="typeSelect" class="form-label fw-semibold">🌡️ Temperatura</label>
+                <select id="typeSelect" class="form-select" name="typeSelect">
                     <option value="">Todos</option>
-                    <option value="morna">Morna</option>
-                    <option value="fria">Fria</option>
-                    <option value="quente">Quente</option>
+                    @foreach ($temperatures as $temperature)
+                        <option value="{{ $temperature->id }}" {{ request('typeSelect') == $temperature->id ? 'selected' : '' }}>
+                            {{ $temperature->symbol }} {{ $temperature->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+    
+            <div class="col-md-4">
+                <label for="elementSelect" class="form-label fw-semibold">🌿 Elemento</label>
+                <select id="elementSelect" class="form-select" name="elementSelect">
+                    <option value="">Todos</option>
+                    @foreach ($elements as $element)
+                        <option value="{{ $element->id }}" {{ request('elementSelect') == $element->id ? 'selected' : '' }}>
+                            {{ $element->symbol }} {{ $element->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="planetSelect" class="form-label fw-semibold">🪐 Planeta Regente</label>
-                <select id="planetSelect" class="form-select">
+                <select id="planetSelect" class="form-select" name="planetSelect">
                     <option value="">Todos</option>
-                    <option value="sol">Sol</option>
-                    <option value="lua">Lua</option>
-                    <option value="marte">Marte</option>
-                    <option value="mercúrio">Mercúrio</option>
-                    <option value="júpiter">Júpiter</option>
-                    <option value="vênus">Vênus</option>
-                    <option value="saturno">Saturno</option>
+                    @foreach ($planets as $planet)
+                        <option value="{{ $planet->id }}" {{ request('planetSelect') == $planet->id ? 'selected' : '' }}>
+                            {{ $planet->symbol }} {{ $planet->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
+    
             <div class="mt-3 text-center col-12">
                 <button type="submit" class="px-4 btn btn-primary">🔎 Buscar Ervas</button>
             </div>
         </form>
-    </div>
-
-    <!-- Listagem de Ervas -->
-    <div class="row" id="herbList">
+    </section>
+    
+    <!-- Exibição dos Resultados -->
+    <div id="herbList" class="row">
         @forelse ($herbs as $herb)
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="mb-4 border-0 shadow-sm card h-100">
-                    <img src="{{ $herb->image }}" class="card-img-top rounded-top" alt="{{ $herb->name }}" title="{{ $herb->name }}">
+                    <img src="{{ $herb->image }}" class="card-img-top rounded-top"
+                         alt="{{ $herb->name }}" title="{{ $herb->name }}" 
+                         style="height: 200px; object-fit: cover;">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="text-center card-title fw-bold text-dark">{{ $herb->name }}</h5>
-                        
+                        <h5 class="text-center card-title fw-bold text-dark">
+                            {{ $herb->name }}
+                        </h5>
+    
                         <!-- Badges -->
-                        <h6 class="flex-wrap gap-2 mb-2 text-center card-subtitle text-body-secondary d-flex justify-content-center">
+                        <h6 class="flex-wrap gap-2 mb-2 text-center d-flex justify-content-center">
                             <x-badge :content="$herb->temperature->name" :colorBackground="$herb->temperature->color_background" :colorText="$herb->temperature->color_text" :icon="$herb->temperature->symbol" />
-                            <x-badge :content="$herb->planet->name" :colorBackground="$herb->planet->color_background" :colorText="$herb->planet->color_text" :icon="$herb->planet->symbol" />
-                            <x-badge :content="$herb->element->name" :colorBackground="$herb->element->color_background" :colorText="$herb->element->color_text" :icon="$herb->element->symbol" />
+                                <x-badge :content="$herb->planet->name" :colorBackground="$herb->planet->color_background" :colorText="$herb->planet->color_text" :icon="$herb->planet->symbol" />
+                                <x-badge :content="$herb->element->name" :colorBackground="$herb->element->color_background" :colorText="$herb->element->color_text" :icon="$herb->element->symbol" />
                         </h6>
-                        
-                        <hr>
-                        <p class="text-muted text-start">{{ Str::limit($herb->description, 120) }}</p>
-                        
-                        <ul class="list-group list-group-horizontal justify-content-center">
-                            <li class="text-center list-group-item fw-bold d-flex align-items-center">
-                                🌿 {{ $herb->alchemies->count() }} {{ Str::plural('alquimia', $herb->alchemies->count()) }} associada{{ $herb->alchemies->count() > 1 ? 's' : '' }}
-                            </li>
-                        </ul>
-                        
-                        <hr>
+    
+                        <p class="text-muted text-start">
+                            {{ Str::limit($herb->description, 120) }}
+                        </p>
+    
                         <div class="mt-auto text-center">
-                            <a href="{{ route('website.erva', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">✨ Ver Detalhes</a>
+                            <a href="{{ route('website.erva', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">
+                                🌿 Ver Detalhes
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -81,5 +95,11 @@
             </div>
         @endforelse
     </div>
+    
+    <!-- Paginação -->
+    <div class="mt-4 d-flex justify-content-center">
+        {{ $herbs->links() }}
+    </div>
+    
 </section>
 @stop

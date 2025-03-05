@@ -8,85 +8,64 @@
     />
 
     <!-- Seção de Filtros -->
-    <div class="p-4 mb-4 rounded shadow-sm bg-light">
-        <form id="filterForm" class="row g-3">
-            <div class="col-md-4">
+    <section class="p-4 mb-4 rounded shadow-sm bg-light">
+        <form id="filterForm" class="row g-3" method="GET" action="{{ route('website.alquimias') }}">
+            <div class="col-md-12">
                 <label for="searchAlchemy" class="form-label fw-semibold">🔍 Nome da Alquimia</label>
-                <input type="text" class="form-control" id="searchAlchemy" placeholder="Digite o nome da alquimia">
+                <input type="text" class="form-control" id="searchAlchemy" name="searchAlchemy" 
+                       placeholder="Digite o nome da alquimia" value="{{ request('searchAlchemy') }}">
             </div>
-
+    
             <div class="col-md-4">
                 <label for="alchemyTypeSelect" class="form-label fw-semibold">🧪 Tipo de Alquimia</label>
-                <select id="alchemyTypeSelect" class="form-select">
+                <select id="alchemyTypeSelect" class="form-select" name="alchemyTypeSelect">
                     <option value="">Todos</option>
-                    <option value="banho">Banho</option>
-                    <option value="poção">Poção</option>
-                    <option value="incenso">Incenso</option>
-                    <option value="talismã">Talismã</option>
-                    <option value="ritual">Ritual</option>
+                    @foreach ($alquemyTypes as $alquemyType)
+                        <option value="{{ $alquemyType->id }}" 
+                            {{ request('alchemyTypeSelect') == $alquemyType->id ? 'selected' : '' }}>
+                            {{ $alquemyType->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
-
+    
             <div class="col-md-4">
                 <label for="moonPhaseSelect" class="form-label fw-semibold">🌙 Fase da Lua</label>
-                <select id="moonPhaseSelect" class="form-select">
+                <select id="moonPhaseSelect" class="form-select" name="moonPhaseSelect">
                     <option value="">Todas</option>
-                    <option value="nova">Lua Nova</option>
-                    <option value="crescente">Lua Crescente</option>
-                    <option value="cheia">Lua Cheia</option>
-                    <option value="minguante">Lua Minguante</option>
+                    @foreach ($moons as $moon)
+                        <option value="{{ $moon->id }}" 
+                            {{ request('moonPhaseSelect') == $moon->id ? 'selected' : '' }}>
+                            {{ $moon->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
-
+    
             <div class="col-md-4">
                 <label for="dayOfWeekSelect" class="form-label fw-semibold">📅 Melhor Dia</label>
-                <select id="dayOfWeekSelect" class="form-select">
+                <select id="dayOfWeekSelect" class="form-select" name="dayOfWeekSelect">
                     <option value="">Todos</option>
-                    <option value="segunda">Segunda-feira</option>
-                    <option value="terça">Terça-feira</option>
-                    <option value="quarta">Quarta-feira</option>
-                    <option value="quinta">Quinta-feira</option>
-                    <option value="sexta">Sexta-feira</option>
-                    <option value="sábado">Sábado</option>
-                    <option value="domingo">Domingo</option>
+                    @foreach ($days as $day)
+                        <option value="{{ $day->id }}" 
+                            {{ request('dayOfWeekSelect') == $day->id ? 'selected' : '' }}>
+                            {{ $day->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
-
-            <div class="col-md-4">
-                <label for="elementSelect" class="form-label fw-semibold">🌿 Elemento</label>
-                <select id="elementSelect" class="form-select">
-                    <option value="">Todos</option>
-                    <option value="fogo">Fogo</option>
-                    <option value="terra">Terra</option>
-                    <option value="ar">Ar</option>
-                    <option value="água">Água</option>
-                </select>
-            </div>
-
-            <div class="col-md-4">
-                <label for="planetSelect" class="form-label fw-semibold">🪐 Planeta Regente</label>
-                <select id="planetSelect" class="form-select">
-                    <option value="">Todos</option>
-                    <option value="sol">Sol</option>
-                    <option value="lua">Lua</option>
-                    <option value="marte">Marte</option>
-                    <option value="mercúrio">Mercúrio</option>
-                    <option value="júpiter">Júpiter</option>
-                    <option value="vênus">Vênus</option>
-                    <option value="saturno">Saturno</option>
-                </select>
-            </div>
-
+    
             <div class="mt-3 text-center col-12">
                 <button type="submit" class="px-4 btn btn-primary">
                     🔎 Buscar Alquimias
                 </button>
             </div>
         </form>
-    </div>
+    </section>
+    
 
     <!-- Listagem de Alquimias -->
-    <div class="row" id="alchemieList">
+    <section class="row" id="alchemieList">
         @forelse ($alchemies as $alchemy)
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="mb-4 border-0 shadow-sm card h-100">
@@ -128,7 +107,7 @@
                 <p class="text-muted fw-bold fs-5">⚠️ Nenhuma alquimia encontrada para os filtros selecionados.</p>
             </div>
         @endforelse
-    </div>
+    </se>
 </section>
 
 

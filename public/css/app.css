@@ -17,6 +17,17 @@ header {
     transition: background 0.5s;
 }
 
-body{
+.bg-green-1{
     background-color: #DBFCE7;
+}
+
+.bg-green-2{
+    background-color: #7BF1A8;
+}
+
+.site-title {
+    font-family: 'EB Garamond', serif; /* Fonte clássica e ancestral */
+    font-size: 1.8rem; /* Tamanho grande para destaque */
+    color: #F4E1C1; /* Tom bege antigo para contraste no fundo escuro */
+    font-weight: bold; /* Texto marcante e sólido */
 }
