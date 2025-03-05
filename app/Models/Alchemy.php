@@ -10,7 +10,16 @@ class Alchemy extends Model
     /** @use HasFactory<\Database\Factories\AlchemyFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'alchemy_type_id', 'description', 'preparation_method', 'precautions', 'moon_id', 'day_of_week_id', 'user_id'];
+    protected $fillable = ['name', 'slug', 'image','alchemy_type_id', 'description', 'preparation_method', 'precautions', 'moon_id', 'day_of_week_id', 'hour_id', 'user_id'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($alchemyType) {
+            $alchemyType->slug = str()->slug($alchemyType->name) . '-' . $alchemyType->id;
+        });
+    }
 
     public function user()
     {
@@ -29,6 +38,11 @@ class Alchemy extends Model
     public function dayOfWeek()
     {
         return $this->belongsTo(DayOfWeek::class);
+    }
+
+    public function hour()
+    {
+        return $this->belongsTo(Hour::class);
     }
 
     public function alchemyType()
@@ -59,5 +73,20 @@ class Alchemy extends Model
     public function getFullColorTypeAttribute()
     {
         return 'background-color: ' . $this->alchemyType->color . '; color: ' . $this->alchemyType->color_text . '; border-color: ' . $this->alchemyType->color_text . ' 1px;';
+    }
+
+    public function getFullColorMoonAttribute()
+    {
+        return 'background-color: ' . $this->moon->color . '; color: ' . $this->moon->color_text . '; border-color: ' . $this->moon->color_text . ' 1px;';
+    }
+
+    public function getFullNameMoonAttribute()
+    {
+        return $this->moon->symbol . ' ' . $this->moon->name;
+    }
+
+    public function getFullColorDayOfWeekAttribute()
+    {
+        return 'background-color: ' . $this->dayOfWeek->color . '; color: ' . $this->dayOfWeek->color_text . '; border-color: ' . $this->dayOfWeek->color_text . ' 1px;';
     }
 }

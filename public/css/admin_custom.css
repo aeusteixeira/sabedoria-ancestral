@@ -22,3 +22,9 @@ body > div > nav > div > ul > li > ul > li > a
 {
     color: #343a40 !important;
 }
+
+.post-title{
+    color: #343a40 !important;
+    font-weight: semibold !important;
+    font-size: 20px !important;
+}

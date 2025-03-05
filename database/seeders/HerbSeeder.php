@@ -26,6 +26,7 @@ class HerbSeeder extends Seeder
                 'slug' => 'alecrim',
                 'planet_regent_id' => 1,
                 'element_regent_id' => 1,
+                'temperature_regent_id' => 1,
                 'user_id' => 1
             ],
             [
@@ -39,6 +40,7 @@ class HerbSeeder extends Seeder
                 'slug' => 'camomila',
                 'planet_regent_id' => 2,
                 'element_regent_id' => 2,
+                'temperature_regent_id' => 2,
                 'user_id' => 1
             ],
             [
@@ -53,19 +55,21 @@ devem evitar o uso de hortelã, pois a erva pode ter efeitos adversos na gravide
                 'slug' => 'hortela',
                 'planet_regent_id' => 3,
                 'element_regent_id' => 3,
+                'temperature_regent_id' => 3,
                 'user_id' => 1
             ],
             [
                 'name' => 'Manjericão',
+                'image' => 'https://image.tuasaude.com/media/article/lk/sf/manjericao_3994.jpg?width=686&height=487',
                 'description' => 'O manjericão é uma erva aromática que é usada em muitas cozinhas ao redor do mundo. Ele tem um sabor doce e é frequentemente usado para temperar molhos, saladas e massas. O manjericão também é conhecido por suas propriedades medicinais e tem sido usado por séculos para tratar uma variedade de condições de saúde.',
                 'history_origin' => 'O manjericão é nativo da Índia e tem sido usado na culinária e na medicina tradicional por milhares de anos. Os antigos egípcios, gregos e romanos acreditavam que o manjericão tinha propriedades curativas e usavam a erva para tratar uma variedade de doenças.',
                 'magical_uses' => 'O manjericão é frequentemente associado à proteção e à prosperidade. Diz-se que a erva ajuda a afastar energias negativas e atrair boa sorte e sucesso, e é frequentemente usada em rituais de proteção e prosperidade. O manjericão também é considerado uma erva de amor e é frequentemente usada para atrair e fortalecer relacionamentos.',
                 'biological_uses' => 'O manjericão tem propriedades antioxidantes e anti-inflamatórias e tem sido estudado por seus potenciais benefícios para a saúde. A erva contém compostos que podem ajudar a reduzir a inflamação, proteger contra danos celulares e promover a saúde cardiovascular. O manjericão também é rico em vitaminas e minerais e pode ajudar a fortalecer o sistema imunológico e promover a saúde geral.',
                 'precautions' => 'Embora o manjericão seja geralmente seguro para a maioria das pessoas, algumas pessoas podem ser alérgicas à erva e podem experimentar irritação da pele ou outros sintomas. É importante falar com um profissional de saúde antes de usar o manjericão para tratar qualquer condição de saúde. Mulheres grávidas ou lactantes também devem evitar o uso de manjericão, pois a erva pode ter efeitos adversos na gravidez e na amamentação.',
-                'image' => 'manjericao.jpg',
                 'slug' => 'manjericao',
                 'planet_regent_id' => 4,
                 'element_regent_id' => 4,
+                'temperature_regent_id' => 3,
                 'user_id' => 1
             ],
         ];

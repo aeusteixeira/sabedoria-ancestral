@@ -1,13 +1,11 @@
 @extends('layouts.web')
 
 @section('content')
-<section class="container my-5">
-    <div class="row">
-        <div class="text-center col-lg-12">
-            <h1 class="mb-3">🔮 Bem-vindo ao Sabedoria Ancestral</h1>
-            <p class="lead">Seu portal de conhecimento esotérico, magia e espiritualidade.</p>
-        </div>
-    </div>
+<section >
+    <x-header-page
+        title="✨ Bem-vindo ao Sabedoria Ancestral"
+        description="Explore os mistérios da Lua, os planetas regentes e as horas planetárias para potencializar sua jornada espiritual."
+    />
 
     <div class="text-center row">
         <!-- Card da Fase da Lua -->
@@ -53,83 +51,6 @@
     <div id="loading" class="my-3 text-center">Carregando dados...</div>
 </section>
 
-<!-- Seção de Práticas Espirituais -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="mb-4 text-center">🌀 Práticas Espirituais</h2>
-        <div class="text-center row">
-            <div class="mb-4 col-lg-4 col-md-6">
-                <div class="shadow-sm card">
-                    <img src="https://pm1.aminoapps.com/7671/0d561b5feca0071202b2e691f48a6e9b479931dbr1-564-501v2_hq.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Imagem do card">
-                    <div class="card-body">
-                        <h5 class="card-title">🪄 Consagração de Objetos</h5>
-                        <p class="card-text">Aprenda a consagrar seus objetos mágicos.</p>
-                        <a href="#" class="btn btn-secondary">Aprender</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-4 col-lg-4 col-md-6">
-                <div class="shadow-sm card">
-                    <img src="https://i0.wp.com/oficinadasbruxas.com/wp-content/uploads/2015/08/Pedras-cristais-poder-magico.jpg?fit=1200%2C640&ssl=1" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Imagem do card">
-                    <div class="card-body">
-                        <h5 class="card-title">🪨 Cristais e Energias</h5>
-                        <p class="card-text">Descubra o poder dos cristais e como utilizá-los.</p>
-                        <a href="#" class="btn btn-secondary">Explorar</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-4 col-lg-4 col-md-6">
-                <div class="shadow-sm card">
-                    <img src="https://p2.trrsf.com/image/fget/cf/940/0/images.terra.com/2020/12/09/saiba-mais-sobre-ervas-especiarias-e-oleos-essenciais-na-magia-16479.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Imagem do card">
-                    <div class="card-body">
-                        <h5 class="card-title">🌿 Ervas e Magia</h5>
-                        <p class="card-text">Utilize ervas para banhos, defumações e feitiços.</p>
-                        <a href="#" class="btn btn-secondary">Saiba Mais</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Seção de Ferramentas Esotéricas -->
-<section class="container my-5">
-    <h2 class="mb-4 text-center">🛠️ Ferramentas Esotéricas</h2>
-    <div class="text-center row">
-        <div class="mb-4 col-lg-4 col-md-6">
-            <div class="shadow-sm card">
-                <div class="card-body">
-                    <h5 class="card-title">📅 Agenda Lunar</h5>
-                    <p class="card-text">Planeje seus rituais de acordo com as fases da lua.</p>
-                    <a href="#" class="btn btn-dark">Acessar</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-4 col-lg-4 col-md-6">
-            <div class="shadow-sm card">
-                <div class="card-body">
-                    <h5 class="card-title">📖 Grimório Online</h5>
-                    <p class="card-text">Crie seu próprio grimório digital com receitas e rituais.</p>
-                    <a href="#" class="btn btn-dark">Criar</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-4 col-lg-4 col-md-6">
-            <div class="shadow-sm card">
-                <div class="card-body">
-                    <h5 class="card-title">🔮 Oráculo Virtual</h5>
-                    <p class="card-text">Faça consultas gratuitas com Tarot e Baralho Cigano.</p>
-                    <a href="#" class="btn btn-dark">Consultar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Seção de Cursos e Instituto -->
 <section class="py-5 text-white bg-dark">
     <div class="container text-center">
@@ -147,11 +68,6 @@
     </div>
 </section>
 
-@stop
-
-@section('css')
-{{-- Add here extra stylesheets --}}
-{{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
 @stop
 
 @section('js')

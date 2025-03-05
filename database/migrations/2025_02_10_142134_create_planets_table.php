@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('image');
             $table->string('symbol');
-            $table->string('color');
+            $table->string('color_background');
             $table->string('color_text');
             $table->text('description');
             $table->text('magical_properties');

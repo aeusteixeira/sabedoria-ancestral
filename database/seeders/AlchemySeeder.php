@@ -15,12 +15,14 @@ class AlchemySeeder extends Seeder
         $alchemys = [
             [
                 'name' => 'Banho Energético de Limpeza',
+                'image' => 'https://capimsantoterapias.com.br/wp-content/uploads/2020/04/banhos_de_ervas_capimsanto_001.jpg',
                 'alchemy_type_id' => 1,
                 'description' => 'Banho de limpeza energética para remover energias negativas e promover o equilíbrio.',
                 'preparation_method' => 'Ferva 1 litro de água e adicione 1 ramo de alecrim, 3 galhos de arruda e 7 pedras de sal grosso. Deixe esfriar e coe. Após o banho normal, jogue o banho da cabeça aos pés.',
                 'precautions' => 'Não use este banho durante a menstruação ou se estiver com ferimentos abertos.',
                 'moon_id' => 1,
                 'day_of_week_id' => 5,
+                'hour_id' => 3,
                 'user_id' => 1
             ],
             [
@@ -31,6 +33,7 @@ class AlchemySeeder extends Seeder
                 'precautions' => 'Evite o consumo de chá se tiver problemas cardíacos ou pressão alta.',
                 'moon_id' => 5,
                 'day_of_week_id' => 3,
+                'hour_id' => 2,
                 'user_id' => 1
             ],
             [
@@ -41,6 +44,7 @@ class AlchemySeeder extends Seeder
                 'precautions' => 'Realize este feitiço em um ambiente tranquilo, sem interrupções, e com pensamentos positivos.',
                 'moon_id' => 4,
                 'day_of_week_id' => 5,
+                'hour_id' => 3,
                 'user_id' => 1
             ],
             [
@@ -51,6 +55,7 @@ class AlchemySeeder extends Seeder
                 'precautions' => 'Não usar se estiver grávida ou em lactação.',
                 'moon_id' => 3,
                 'day_of_week_id' => null,
+                'hour_id' => 2,
                 'user_id' => 1
             ],
         ];

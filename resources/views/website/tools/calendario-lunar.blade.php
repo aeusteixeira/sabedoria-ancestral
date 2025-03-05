@@ -1,19 +1,14 @@
 @extends('layouts.web')
-
-@section('title', 'Sabedoria Ancestral')
-
-@section('subtitle')
-    Conecte-se com a natureza e com o universo
-@stop
-
 @section('content')
-<section class="container my-5">
-    <h1 class="mb-4" id="calendarTitle">Calendário Lunar</h1>
-    <p class="mb-4">
-        O calendário lunar é uma ferramenta antiga utilizada para acompanhar as fases da Lua ao longo do mês. Cada fase
-        lunar possui significados e energias específicas que podem ser aproveitadas em rituais, feitiços e práticas
-        espirituais. Descubra as fases da Lua deste mês e como utilizá-las em seus trabalhos mágicos.
-    </p>
+<section >
+    <div class="mb-5 text-center">
+        <h1 class="fw-bold text-gradient" id="calendarTitle">
+            {{ $seo['title'] }}
+        </h1>
+        <p class="lead text-muted">
+            {!! $seo['description'] !!}
+        </p>
+    </div>
     <table id="calendar" class="table table-bordered"></table>
     <div class="mt-5">
         <h2 class="mb-4">Fases da Lua e Trabalhos Mágicos</h2>
@@ -130,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const month = today.getMonth(); // 0-indexado
     const monthName = today.toLocaleString('pt-BR', { month: 'long' });
     document.getElementById("calendarTitle").innerText =
-        "Calendário Lunar - " + monthName.charAt(0).toUpperCase() + monthName.slice(1) + " " + year;
+        "🌙 Calendário Lunar - " + monthName.charAt(0).toUpperCase() + monthName.slice(1) + " " + year;
 
     // Primeiro dia do mês e número total de dias
     const firstDay = new Date(year, month, 1);

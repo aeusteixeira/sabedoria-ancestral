@@ -13,7 +13,7 @@ class Element extends Model
     protected $fillable = [
         'name',
         'symbol',
-        'color',
+        'color_background',
         'color_text',
         'description',
         'image',

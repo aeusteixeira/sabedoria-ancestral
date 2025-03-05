@@ -24,4 +24,9 @@ class Chakra extends Model
     {
         return $this->belongsTo(Element::class);
     }
+
+    public function herbs()
+    {
+        return $this->belongsToMany(Herb::class, 'chakra_herb');
+    }
 }

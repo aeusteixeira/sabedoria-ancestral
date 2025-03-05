@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
+            TemperatureSeeder::class,
             DayOfWeekSeeder::class,
             MoonSeeder::class,
             PlanetSeeder::class,
@@ -25,9 +26,11 @@ class DatabaseSeeder extends Seeder
             ChakraSeeder::class,
             TypeStoneSeeder::class,
             StoneSeeder::class,
+            HourSeeder::class,
             AlchemyTypeSeeder::class,
             AlchemySeeder::class,
             AlchemyHerbStoneSeeder::class,
+            ChakraHerb::class
         ]);
 
         User::factory()->create([

@@ -14,7 +14,7 @@ class AlchemyType extends Model
         'name',
         'slug',
         'symbol',
-        'color',
+        'color_background',
         'color_text',
     ];
 

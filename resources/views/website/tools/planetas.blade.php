@@ -1,20 +1,11 @@
 @extends('layouts.web')
 
-@section('title', 'Sabedoria Ancestral')
-
-@section('subtitle')
-Conecte-se com a natureza e com o universo
-@stop
-
 @section('content')
-    <section class="container my-5">
-        <h1 class="mb-4">Planetas e Suas Correspondências Mágicas</h1>
-        <p class="mb-4">
-            Os planetas do sistema solar possuem influências mágicas e energéticas que podem ser utilizadas em rituais e
-            práticas espirituais. Cada planeta rege aspectos específicos da vida e da personalidade, e compreender suas
-            correspondências é essencial para a realização de feitiços e magias. Neste guia, exploramos os planetas e suas
-            associações mágicas, bem como rituais e práticas relacionadas a cada um deles.
-        </p>
+    <section>
+        <x-header-page
+        :title="$seo['title']"
+        :description="$seo['description']"
+    />
         <table class="table table-bordered">
             <thead>
                 <tr>

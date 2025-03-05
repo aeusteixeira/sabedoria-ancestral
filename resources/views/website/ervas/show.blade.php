@@ -7,83 +7,108 @@ Conecte-se com a natureza e com o universo
 @stop
 
 @section('content')
-<section class="container my-5">
-    <div class="mb-3 rounded shadow-sm card">
-        <div class="card-body">
+<section  >
+    <div class="mb-4 border-0 rounded shadow-sm card">
+        <div class="p-4 card-body">
             <div class="row">
-                <!-- Imagem da Erva -->
-                <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <img src="{{ $herb->image }}"
-                         class="rounded shadow card-img-top"
-                         style="max-width: 100%; height: auto; object-fit: cover; border-radius: 10px;"
-                         alt="Alecrim">
-                </div>
+                <!-- Imagem da Erva + Avaliação -->
+                <div class="col-md-4 d-flex flex-column align-items-center">
+                    <img src="{{ $herb->image }}" class="rounded shadow-sm card-img-top"
+                        style="max-width: 100%; height: auto; object-fit: cover; border-radius: 12px;"
+                        alt="{{ $herb->name }}" title="{{ $herb->name }}">
 
-                <!-- Informações da Erva -->
-                <div class="col-md-8">
-                    <h2 class="mb-3 text-center card-title">🌿 {{ $herb->name }}</h2>
-                    <div class="mb-3 text-center">
-                        <span class="badge" style="{{ $herb->full_color_planet }}">
-                            {{ $herb->full_planet_name }}
-                        </span>
-                        <span class="badge {{ $herb->full_color_element }}">
-                            {{ $herb->full_element_name }}
-                        </span>
-                    </div>
-
-                    <p class="text-justify text-muted">
-                        {{ $herb->description }}
-                    </p>
-                    <div class="gap-2 d-flex justify-content-between align-items-center">
+                    <!-- Botões de Interação -->
+                    <div class="flex-wrap gap-2 mt-4 d-flex justify-content-center">
                         <button class="gap-1 btn btn-outline-danger btn-sm d-flex align-items-center">
-                            ❤️ <span>Favoritar</span>
-                            <span class="fw-semibold">(0)</span>
+                            ❤️ <span>Favoritar</span> <span class="fw-semibold">(0)</span>
                         </button>
 
                         <button class="gap-1 btn btn-outline-info btn-sm d-flex align-items-center">
                             🔗 <span>Compartilhar</span>
                         </button>
                     </div>
+                </div>
 
+                <!-- Informações da Erva -->
+                <div class="col-md-8">
+                    <h2 class="mb-3 text-center text-success fw-bold">
+                        🌿 {{ $herb->name }}
+                    </h2>
+
+                    <p class="mt-3 text-justify text-muted">
+                        {{ $herb->description }}
+                    </p>
+
+                    <div class="mt-3 row">
+                        <div class="mb-2 col-sm-12 col-md-6">
+                            <h5 class="text-primary">
+                                🌡️ Temperatura:
+                            </h5>
+                                <x-badge :content="$herb->temperature->name" :colorBackground="$herb->temperature->color_background" :colorText="$herb->temperature->color_text" :icon="$herb->temperature->symbol" />
+                        </div>
+                        <div class="mb-2 col-sm-12 col-md-6">
+                            <h5 class="text-primary">
+                                🪐 Planeta Regente:
+                            </h5>
+                                <x-badge :content="$herb->planet->name" :colorBackground="$herb->planet->color_background" :colorText="$herb->planet->color_text" :icon="$herb->planet->symbol" />
+                        </div>
+                        <div class="mb-2 col-sm-12 col-md-6">
+                            <h5 class="text-primary">
+                                🪨 Elemento Regente:
+                            </h5>
+                            <ul class="list-unstyled">
+                                    <x-badge :content="$herb->element->name" :colorBackground="$herb->element->color_background" :colorText="$herb->element->color_text" :icon="$herb->element->symbol" />
+                            </ul>
+                        </div>
+                        <div class="mb-2 col-sm-12 col-md-6">
+                            <h5 class="text-primary">
+                                🪬 Chakras Regentes:
+                            </h5>
+                            <div class="flex-wrap gap-2 d-flex">
+                                @forelse ($herb->chakras as $chakra)
+                                    <x-badge :content="$chakra->name" :colorBackground="$chakra->color_background" :colorText="$chakra->color_text" :icon="$chakra->symbol" />
+                                @empty
+                                    <p class="text-muted">Nenhum chakra encontrado</p>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+
+                    
                 </div>
             </div>
 
             <hr>
 
-            <!-- Seções de Informações Detalhadas -->
+            <!-- Informações Detalhadas -->
             <div class="row">
                 <div class="col-md-6">
-                    <h5>📜 História e Origem</h5>
-                    <p>
-                        {{ $herb->history_origin }}
-                    </p>
+                    <h5 class="text-primary">📜 História e Origem</h5>
+                    <p class="text-secondary">{{ $herb->history_origin }}</p>
                 </div>
                 <div class="col-md-6">
-                    <h5>🔮 Usos Mágicos</h5>
-                    <p>
-                        {{ $herb->magical_uses }}
-                    </p>
+                    <h5 class="text-primary">🔮 Usos Mágicos</h5>
+                    <p class="text-secondary">{{ $herb->magical_uses }}</p>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="mt-3 row">
                 <div class="col-md-6">
-                    <h5>🌱 Usos Biológicos</h5>
-                    <p>
-                        {{ $herb->biological_uses }}
-                    </p>
+                    <h5 class="text-primary">🌱 Usos Biológicos</h5>
+                    <p class="text-secondary">{{ $herb->biological_uses }}</p>
                 </div>
                 <div class="col-md-6">
-                    <h5>⚠️ Precauções</h5>
-                    <p>
-                        {{ $herb->precautions }}
-                    </p>
+                    <h5 class="text-danger">⚠️ Precauções</h5>
+                    <p class="text-secondary">{{ $herb->precautions }}</p>
                 </div>
             </div>
-            <div class=" credits text-muted">
-                <p>
-                    Publicado por:
-                    <a href="#" class="fw-bold text-decoration-none">{{ $herb->user->name }}</a>
+
+            <hr>
+
+            <!-- Créditos -->
+            <div class="mt-3 text-center text-muted small">
+                <p class="mb-0">
+                    Publicado por: <a href="#" class="fw-bold text-decoration-none">{{ $herb->user->name }}</a>
                     | Publicado em: <span class="fw-semibold">{{ $herb->created_at->format('d/m/Y') }}</span>
                     | Revisado por <span class="fw-semibold">2 pessoas</span>.
                 </p>
@@ -91,68 +116,47 @@ Conecte-se com a natureza e com o universo
 
             <hr>
 
-            <!-- Receitas Mágicas -->
-            <h3 class="mb-3 text-center ">✨ Receitas Mágicas com Alecrim</h3>
+            <!-- Receitas Mágicas com a Erva -->
+            <h3 class="mb-3 text-center">✨ Receitas Mágicas com {{ $herb->name }}</h3>
             <div class="row">
-                @forelse ( $herb->alchemies as $alchemie)
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="shadow-sm card h-100">
-                        <img src="https://cdn.awsli.com.br/2660/2660278/produto/246588082/alecrim-folhas-100g-34ddlilbap.jpg"
-                             class="card-img-top"
-                             alt="Alecrim"
-                             style="height: 200px; object-fit: cover;">
+                @forelse ($herb->alchemies as $alchemie)
+                    <div class="mb-2 col-sm-12 col-md-6 col-lg-4">
+                        <div class="border-0 shadow-sm card h-100">
+                            <img src="{{ $alchemie->image ?? 'https://cdn.awsli.com.br/2660/2660278/produto/246588082/alecrim-folhas-100g-34ddlilbap.jpg' }}"
+                                 class="card-img-top rounded-top"
+                                 alt="{{ $alchemie->name }}"
+                                 style="height: 200px; object-fit: cover;">
 
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="text-center card-title">
-                                {{ $alchemie->name }}
-                            </h5>
-                            <div class="text-center">
-                                <span class="badge" style="{{ $alchemie->full_color_type }}">
-                                    {{ $alchemie->full_type_name }}
-                                </span>
-                            </div>
-                            <hr>
-                            <p class="text-justify card-text">
-                                {{ $alchemie->description }}
-                            </p>
-                            <div class="mt-auto text-center">
-                                <a href="#" class="btn btn-success w-100">
-                                    Ver mais
-                                </a>
+                            <div class="p-3 card-body d-flex flex-column">
+                                <h5 class="text-center card-title">
+                                    {{ $alchemie->name }}
+                                </h5>
+                                <div class="text-center">
+                                    <span class="px-3 py-2 badge" style="{{ $alchemie->full_color_type }}">
+                                        {{ $alchemie->full_type_name }}
+                                    </span>
+                                </div>
+                                <hr>
+                                <p class="text-justify text-muted card-text">
+                                    {{ Str::limit($alchemie->description, 100) }}
+                                </p>
+                                <div class="mt-auto text-center">
+                                    <a class="btn btn-success w-100" href="{{ route('website.alquimia', ['slug' => $alchemie->slug]) }}">
+                                        Ver mais
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @empty
-                    <p>Não foram encontrados resultados para a busca.</p>
+                    <p class="text-center text-muted">Nenhuma receita encontrada para esta erva.</p>
                 @endforelse
             </div>
         </div>
     </div>
 
-    <!-- Comentários -->
-    <div class="mb-3 rounded shadow-sm card">
-        <div class="card-body">
-            <h3 class="mb-3 text-center">📝 Comentários</h3>
 
-            <div class="mb-3">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                        <img src="https://cdn.awsli.com.br/2660/2660278/produto/246588082/alecrim-folhas-100g-34ddlilbap.jpg"
-                             class="rounded-circle"
-                             style="width: 50px; height: 50px; object-fit: cover;"
-                             alt="Usuário 1">
-                        <div class="ms-3">
-                            <h6 class="mb-0">Usuário 1</h6>
-                            <small class="text-muted">🌟🌟🌟🌟🌟</small>
-                        </div>
-                    </div>
-                    <small class="text-muted"></small>Há 2 dias</small>
-                </div>
-                <p class="mt-2 text-muted">Alecrim é uma erva incrível, uso sempre em meus rituais de proteção e limpeza espiritual.</p>
-            </div>
-        </div>
-        </div>
+
 </section>
 @stop
 

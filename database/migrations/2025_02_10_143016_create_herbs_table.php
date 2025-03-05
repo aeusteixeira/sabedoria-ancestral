@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('planet_regent_id')->nullable()->constrained('planets');
             $table->foreignId('element_regent_id')->nullable()->constrained('elements');
+            $table->foreignId('temperature_regent_id')->nullable()->constrained('temperatures');
             $table->timestamps();
         });
     }

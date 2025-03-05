@@ -21,6 +21,7 @@ class Herb extends Model
         'slug',
         'planet_regent_id',
         'element_regent_id',
+        'temperature_regent_id',
         'user_id'
     ];
 
@@ -42,6 +43,16 @@ class Herb extends Model
     public function alchemies()
     {
         return $this->belongsToMany(Alchemy::class, 'alchemy_herb');
+    }
+
+    public function chakras()
+    {
+        return $this->belongsToMany(Chakra::class, 'chakra_herb');
+    }
+
+    public function temperature()
+    {
+        return $this->belongsTo(Temperature::class, 'temperature_regent_id');
     }
 
     public function getFullElementNameAttribute()

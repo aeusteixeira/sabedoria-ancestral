@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('symbol');
-            $table->string('color');
+            $table->string('color_background');
             $table->string('color_text');
             $table->timestamps();
         });

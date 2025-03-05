@@ -1,121 +1,85 @@
 @extends('layouts.web')
 
-@section('title', 'Catálogo de Ervas Mágicas')
-
-@section('subtitle')
-    Saiba mais sobre as propriedades mágicas das ervas
-@stop
-
 @section('content')
-    <section class="container my-5">
-        <h1 class="mb-4" id="calendarTitle">
-            Catálogo de Ervas Mágicas
-        </h1>
-        <p class="mb-4">
-            As ervas possuem propriedades mágicas e energéticas que podem ser utilizadas em rituais, feitiços e práticas espirituais. Cada erva possui uma vibração única e pode ser associada a diferentes intenções e propósitos mágicos. Neste guia, você encontrará uma lista de ervas mágicas com suas correspondências, usos e propriedades. Explore o mundo das ervas e descubra como incorporá-las em sua prática espiritual.
-        </p>
+<section  >
 
-        <div class="filter-section">
-            <form id="filterForm" class="row g-3">
-                <div class="col-md-4">
-                    <label for="searchName" class="form-label">Nome da Erva</label>
-                    <input type="text" class="form-control" id="searchName" placeholder="Digite o nome da erva">
-                </div>
-                <div class="col-md-4">
-                    <label for="typeSelect" class="form-label">Tipo de Erva</label>
-                    <select id="typeSelect" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="morna">Morna</option>
-                        <option value="fria">Fria</option>
-                        <option value="quente">Quente</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="planetSelect" class="form-label">Planeta Regente</label>
-                    <select id="planetSelect" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="sol">Sol</option>
-                        <option value="lua">Lua</option>
-                        <option value="marte">Marte</option>
-                        <option value="mercúrio">Mercúrio</option>
-                        <option value="júpiter">Júpiter</option>
-                        <option value="vênus">Vênus</option>
-                        <option value="saturno">Saturno</option>
-                    </select>
-                </div>
-            </form>
-        </div>
+    <x-header-page
+        :title="$seo['title']"
+        :description="$seo['description']"
+    />
 
-        <!-- Seção de Listagem de Ervas -->
-        <div id="herbList" class="row row-cols-1 row-cols-md-3">
-            <!-- Exemplo de Card de Erva -->
-            @forelse ( $herbs as $herb)
-            <div class="col">
-                <div class="shadow-sm card h-100">
-                    <img src="{{ $herb->image }}"
-                         class="card-img-top"
-                         alt="{{ $herb->name }}"
-                         title="{{ $herb->name }}"
-                         style="height: 200px; object-fit: cover;">
+    <!-- Seção de Filtros -->
+    <div class="p-4 mb-4 rounded shadow-sm bg-light">
+        <form id="filterForm" class="row g-3">
+            <div class="col-md-4">
+                <label for="searchName" class="form-label fw-semibold">🔍 Nome da Erva</label>
+                <input type="text" class="form-control" id="searchName" placeholder="Digite o nome da erva">
+            </div>
+            <div class="col-md-4">
+                <label for="typeSelect" class="form-label fw-semibold">🌡️ Tipo de Erva</label>
+                <select id="typeSelect" class="form-select">
+                    <option value="">Todos</option>
+                    <option value="morna">Morna</option>
+                    <option value="fria">Fria</option>
+                    <option value="quente">Quente</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="planetSelect" class="form-label fw-semibold">🪐 Planeta Regente</label>
+                <select id="planetSelect" class="form-select">
+                    <option value="">Todos</option>
+                    <option value="sol">Sol</option>
+                    <option value="lua">Lua</option>
+                    <option value="marte">Marte</option>
+                    <option value="mercúrio">Mercúrio</option>
+                    <option value="júpiter">Júpiter</option>
+                    <option value="vênus">Vênus</option>
+                    <option value="saturno">Saturno</option>
+                </select>
+            </div>
+            <div class="mt-3 text-center col-12">
+                <button type="submit" class="px-4 btn btn-primary">🔎 Buscar Ervas</button>
+            </div>
+        </form>
+    </div>
 
+    <!-- Listagem de Ervas -->
+    <div class="row" id="herbList">
+        @forelse ($herbs as $herb)
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="mb-4 border-0 shadow-sm card h-100">
+                    <img src="{{ $herb->image }}" class="card-img-top rounded-top" alt="{{ $herb->name }}" title="{{ $herb->name }}">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="text-center card-title">
-                            {{ $herb->name }}
-                        </h5>
-                        <h6 class="mb-2 text-center card-subtitle text-body-secondary">
-                            <span class="badge" style="{{ $herb->full_color_planet }}">
-                                {{ $herb->full_planet_name }}
-                            </span>
-                            <span class="badge {{ $herb->full_color_element }}">
-                                {{ $herb->full_element_name }}
-                            </span>
+                        <h5 class="text-center card-title fw-bold text-dark">{{ $herb->name }}</h5>
+                        
+                        <!-- Badges -->
+                        <h6 class="flex-wrap gap-2 mb-2 text-center card-subtitle text-body-secondary d-flex justify-content-center">
+                            <x-badge :content="$herb->temperature->name" :colorBackground="$herb->temperature->color_background" :colorText="$herb->temperature->color_text" :icon="$herb->temperature->symbol" />
+                            <x-badge :content="$herb->planet->name" :colorBackground="$herb->planet->color_background" :colorText="$herb->planet->color_text" :icon="$herb->planet->symbol" />
+                            <x-badge :content="$herb->element->name" :colorBackground="$herb->element->color_background" :colorText="$herb->element->color_text" :icon="$herb->element->symbol" />
                         </h6>
+                        
                         <hr>
-                        <p class="text-justify card-text">
-                            {{ $herb->description }}
-                        </p>
-
+                        <p class="text-muted text-start">{{ Str::limit($herb->description, 120) }}</p>
+                        
                         <ul class="list-group list-group-horizontal justify-content-center">
                             <li class="text-center list-group-item fw-bold d-flex align-items-center">
-                                🌿 {{ $herb->alchemies->count() }}
-                                {{ Str::plural('alquimia', $herb->alchemies->count()) }} associada{{ $herb->alchemies->count() > 1 ? 's' : '' }} a esta erva
+                                🌿 {{ $herb->alchemies->count() }} {{ Str::plural('alquimia', $herb->alchemies->count()) }} associada{{ $herb->alchemies->count() > 1 ? 's' : '' }}
                             </li>
                         </ul>
-
-
+                        
                         <hr>
-
                         <div class="mt-auto text-center">
-                            <a href="{{ route('website.erva', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">
-                                Ver mais
-                            </a>
+                            <a href="{{ route('website.erva', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">✨ Ver Detalhes</a>
                         </div>
                     </div>
                 </div>
-
-
             </div>
-            @empty
-                <p>Não foram encontrados resultados para a busca.</p>
-            @endforelse
-
-        </div>
-</div>
-    </section>
-@stop
-
-@section('css')
-    <style>
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
-        .filter-section {
-            margin-bottom: 20px;
-        }
-    </style>
-@stop
-
-@section('js')
-
+        @empty
+            <div class="text-center col-12">
+                <p class="text-muted fw-bold fs-5">⚠️ Nenhuma erva encontrada para os filtros selecionados.</p>
+            </div>
+        @endforelse
+    </div>
+</section>
 @stop

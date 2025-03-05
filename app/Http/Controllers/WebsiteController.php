@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alchemy;
 use App\Models\Herb;
 use Illuminate\Http\Request;
 
@@ -42,8 +43,8 @@ class WebsiteController extends Controller
     public function horaPlanetaria()
     {
         $seo = $this->generateSeo(
-            'Hora Planetária',
-            'Descubra qual é a hora planetária do dia',
+            '⏳ Hora Planetária do Dia',
+            'A hora planetária é uma técnica antiga que divide o dia e a noite em períodos regidos por planetas. Cada hora é associada a um planeta, que influencia a energia do momento. Descubra as horas planetárias de hoje e amanhã para o seu local.',
             ['hora planetária', 'astrologia', 'planetas', 'sabedoria ancestral'],
             'website.hora-planetaria'
         );
@@ -54,8 +55,10 @@ class WebsiteController extends Controller
     public function calendarioLunar()
     {
         $seo = $this->generateSeo(
-            'Calendário Lunar',
-            'Saiba as fases da Lua e sua influência energética',
+            '🌙 Calendário Lunar',
+            'O calendário lunar é uma ferramenta antiga utilizada para acompanhar as fases da Lua ao longo do mês. Cada fase
+        lunar possui significados e energias específicas que podem ser aproveitadas em rituais, feitiços e práticas
+        espirituais. Descubra as fases da Lua deste mês e como utilizá-las em seus trabalhos mágicos.',
             ['calendário lunar', 'fases da lua', 'energia cósmica'],
             'website.calendario-lunar'
         );
@@ -66,8 +69,11 @@ class WebsiteController extends Controller
     public function planetas()
     {
         $seo = $this->generateSeo(
-            'Planetas e Astrologia',
-            'Explore a influência dos planetas na sua vida',
+            '🪐 Planetas e suas correspondências Mágicas',
+            'Os planetas do sistema solar possuem influências mágicas e energéticas que podem ser utilizadas em rituais e
+            práticas espirituais. Cada planeta rege aspectos específicos da vida e da personalidade, e compreender suas
+            correspondências é essencial para a realização de feitiços e magias. Neste guia, exploramos os planetas e suas
+            associações mágicas, bem como rituais e práticas relacionadas a cada um deles.',
             ['planetas', 'astrologia', 'esoterismo', 'mapa astral'],
             'website.planetas'
         );
@@ -78,8 +84,9 @@ class WebsiteController extends Controller
     public function ervas()
     {
         $seo = $this->generateSeo(
-            'Ervas e Magia Natural',
-            'Descubra os segredos das ervas para cura e magia',
+            '🌿 Catálogo de Ervas Mágicas',
+            'As ervas possuem energias únicas que podem ser utilizadas em rituais, feitiços e práticas espirituais. 
+            Explore este guia e descubra como incorporá-las em sua jornada mística.',
             ['ervas', 'magia natural', 'cura', 'rituais'],
             'website.ervas'
         );
@@ -108,11 +115,45 @@ class WebsiteController extends Controller
         return view('website.ervas.show', compact('herb', 'seo'));
     }
 
+    public function alquimias()
+    {
+        $seo = $this->generateSeo(
+            '🔮 Catálogo de Alquimias e Magia Natural',
+            'As alquimias combinam ervas, cristais, planetas e fases lunares para potencializar feitiços e práticas espirituais. Descubra combinações mágicas que ampliam a energia dos rituais.',
+            ['alquimias', 'magia natural', 'cura', 'rituais', 'ervas'],
+            'website.alquimias'
+        );
+
+        $alchemies = Alchemy::all();
+
+        return view('website.alquimia.index', [
+            'seo' => $seo,
+            'alchemies' => $alchemies
+        ]);
+    }
+
+    public function alquimia($slug)
+    {
+        $alchemy = Alchemy::where('slug', $slug)->firstOrFail();
+
+        $seo = $this->generateSeo(
+            $alchemy->name,
+            'Saiba mais sobre a erva ' . $alchemy->name . ', suas propriedades magicas, curativas e o como usar no seu dia a dia',
+            [$alchemy->slug],
+            'website.erva',
+            $slug
+        );
+
+        return view('website.alquimia.show', [
+            'alchemy' => $alchemy,
+            'seo' => $seo
+        ]);
+    }
 
     public function sobre()
     {
         $seo = $this->generateSeo(
-            'Sobre Nós',
+            '📜 Sobre nós',
             'Conheça mais sobre o projeto Sabedoria Ancestral',
             ['sobre', 'história', 'missão', 'sabedoria ancestral'],
             'website.sobre'

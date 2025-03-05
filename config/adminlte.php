@@ -317,6 +317,36 @@ return [
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         [
+            'text' => 'Ervas',
+            'url' => 'ervas',
+            'icon' => 'fas fa-fw fa-leaf',
+        ],
+        [
+            'text' => 'Calendário Lunar',
+            'url' => 'calendario-lunar',
+            'icon' => 'fas fa-fw fa-moon',
+        ],
+        [
+            'text' => 'Planetas',
+            'url' => 'planetas',
+            'icon' => 'fas fa-fw fa-earth-americas',
+        ],
+        [
+            'text' => 'Horas Planetarias',
+            'url' => 'horas-planetarias',
+            'icon' => 'fas fa-fw fa-clock',
+        ],
+        [
+            'text' => 'Alquimias',
+            'url' => 'alquimias',
+            'icon' => 'fas fa-fw fa-atom',
+        ],
+        [
+            'text' => 'Favoritos',
+            'url' => 'favoritos',
+            'icon' => 'fas fa-fw fa-star',
+        ],
+        [
             'text' => 'Ferramentas',
              'icon' => 'fas fa-fw fa-tools',
              'submenu' => [

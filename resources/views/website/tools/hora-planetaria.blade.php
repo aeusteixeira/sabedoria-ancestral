@@ -1,17 +1,11 @@
 @extends('layouts.web')
 
-@section('title', 'Sabedoria Ancestral')
-
-@section('subtitle')
-Conecte-se com a natureza e com o universo
-@stop
-
 @section('content')
-<section class="container my-5">
-    <h1>Hora Planetária do Dia</h1>
-    <p>
-        A hora planetária é uma técnica antiga que divide o dia e a noite em períodos regidos por planetas. Cada hora é associada a um planeta, que influencia a energia do momento. Descubra as horas planetárias de hoje e amanhã para o seu local.
-    </p>
+<section>
+    <x-header-page
+        :title="$seo['title']"
+        :description="$seo['description']"
+    />
     <div id="loading" class="my-3 text-center">Carregando dados...</div>
     <div class="table-container">
       <table class="table table-striped table-hover table-bordered">

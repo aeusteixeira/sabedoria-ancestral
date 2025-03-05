@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alchemy;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $alchemies = Alchemy::all();
+        return view('dashboard.index', [
+            'alchemies' => $alchemies
+        ]);
     }
 }

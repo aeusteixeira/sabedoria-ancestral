@@ -10,7 +10,8 @@ Route::group( ['prefix' => '/', 'as' => 'website.'], function () {
     Route::get('/planetas', [App\Http\Controllers\WebsiteController::class, 'planetas'])->name('planetas');
     Route::get('/ervas', [App\Http\Controllers\WebsiteController::class, 'ervas'])->name('ervas');
     Route::get('/ervas/{slug}', [App\Http\Controllers\WebsiteController::class, 'erva'])->name('erva');
-
+    Route::get('/alquimias', [App\Http\Controllers\WebsiteController::class, 'alquimias'])->name('alquimias');
+    Route::get('/alquimias/{slug}', [App\Http\Controllers\WebsiteController::class, 'alquimia'])->name('alquimia');
     Route::get('/sobre', [App\Http\Controllers\WebsiteController::class, 'sobre'])->name('sobre');
 });
 

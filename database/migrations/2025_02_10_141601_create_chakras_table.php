@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description');
             $table->string('color');
-            $table->string('color_hex');
+            $table->string('color_background');
             $table->string('color_text');
             $table->string('location');
             $table->string('mantra');

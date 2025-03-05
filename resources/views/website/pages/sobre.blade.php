@@ -1,16 +1,11 @@
 @extends('layouts.web')
 
-@section('title', 'Sobre o Sabedoria Ancestral')
-
-@section('subtitle')
-    Saiba mais sobre o nosso projeto
-@stop
-
 @section('content')
-<section class="container my-5">
-    <h1 class="mb-4" id="calendarTitle">
-        Sobre o Sabedoria Ancestral
-    </h1>
+<section>
+    <x-header-page
+        :title="$seo['title']"
+        :description="$seo['description']"
+    />
     <p class="mb-4">
         O <strong>Sabedoria Ancestral</strong> nasceu a partir das vivências e ensinamentos do <strong>Instituto Xamânico Ancestral de Nova Iguaçu</strong>, um espaço dedicado ao resgate das tradições espirituais, ao estudo das medicinas da floresta e à conexão profunda com a sabedoria ancestral. Inspirado na caminhada xamânica, este portal foi criado para expandir esse conhecimento, tornando-o acessível a todos que buscam compreender e aplicar práticas espirituais em suas jornadas.
     </p>

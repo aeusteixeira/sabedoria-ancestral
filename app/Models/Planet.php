@@ -15,7 +15,7 @@ class Planet extends Model
         'slug',
         'image',
         'symbol',
-        'color',
+        'color_background',
         'color_text',
         'description',
         'magical_properties',
