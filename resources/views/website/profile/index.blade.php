@@ -90,24 +90,14 @@
                         <div class="tab-pane fade show active" id="services" role="tabpanel" aria-labelledby="services-tab">
                             <div class="mb-3 header d-flex justify-content-between align-items-center">
                                 <h4 class="fw-bold">🛠️ Serviços Criados</h4>
-                                <a href="#" class="btn btn-sm btn-success">Publicar Serviço</a>
+                                @if (Auth::user()->id == $user->id)
+                                    <a href="{{ route('website.service.create') }}" class="btn btn-sm btn-success">Publicar Serviço</a>
+                                @endif
                             </div>
                             <div class="row">
                                 @forelse($user->services as $service)
                                 <div class="col-md-6">
-                                    <div class="mb-3 shadow-sm card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $service->title }}</h5>
-                                            <p class="text-muted">{{ Str::limit($service->description, 100) }}</p>
-                                            <p><strong>💰 Valor:</strong> {{ $service->price ? 'R$ ' . number_format($service->price, 2, ',', '.') : 'A combinar' }}</p>
-                                            <p><strong>📍 Tipo:</strong> {{ ucfirst($service->type) }}</p>
-                                            <p><strong>📞 Contato:</strong> {{ $service->contact_info }}</p>
-                                            <a href="#" class="btn btn-sm btn-success">Ver detalhes</a>
-                                            <a href="#" class="btn btn-sm btn-secondary">Editar</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Excluir</a>
-                                            <a href="#" class="btn btn-sm btn-primary">Compartilhar</a>
-                                        </div>
-                                    </div>
+                                    <x-card-service :service="$service" />
                                 </div>
                                 @empty
                                     <p class="text-muted">Este usuário ainda não cadastrou nenhum serviço.</p>

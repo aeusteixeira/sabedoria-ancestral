@@ -104,7 +104,7 @@
                                         </div>
 
                                         <div class="col-12 col-md-4">
-                                            <a href="{{ route('website.services.create') }}" class="text-decoration-none">
+                                            <a href="{{ route('website.service.create') }}" class="text-decoration-none">
                                                 <div
                                                     class="p-3 text-white rounded shadow-sm bg-warning d-flex flex-column align-items-center justify-content-center">
                                                     <span class="fs-1">💼</span>

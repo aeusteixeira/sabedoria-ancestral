@@ -40,13 +40,13 @@ Route::group(['prefix' => '/', 'as' => 'website.'], function () {
     Route::post('/alquimias/{slug}/comentar', [AlchemyController::class, 'comment'])->name('alchemy.comment');
 
     // 💼 Serviços
-    Route::get('/servicos', [ServiceController::class, 'index'])->name('services.index');
-    Route::get('/servicos/{slug}', [ServiceController::class, 'show'])->name('services.show');
-    Route::get('/servicos/criar', [ServiceController::class, 'create'])->name('services.create');
-    Route::post('/servicos', [ServiceController::class, 'store'])->name('services.store');
-    Route::get('/servicos/{slug}/edit', [ServiceController::class, 'edit'])->name('services.edit');
-    Route::put('/servicos/{slug}', [ServiceController::class, 'update'])->name('services.update');
-    Route::delete('/servicos/{slug}', [ServiceController::class, 'destroy'])->name('services.destroy');
+    Route::get('/servicos', [ServiceController::class, 'index'])->name('service.index');
+    Route::get('/servicos/criar', [ServiceController::class, 'create'])->name('service.create');
+    Route::get('/servicos/{slug}', [ServiceController::class, 'show'])->name('service.show');
+    Route::post('/servicos', [ServiceController::class, 'store'])->name('service.store');
+    Route::get('/servicos/{slug}/edit', [ServiceController::class, 'edit'])->name('service.edit');
+    Route::put('/servicos/{slug}', [ServiceController::class, 'update'])->name('service.update');
+    Route::delete('/servicos/{slug}', [ServiceController::class, 'destroy'])->name('service.destroy');
 
     // 👤 Perfis de Usuários
     Route::get('/perfil/{username}', [ProfileController::class, 'index'])->name('profile.index');

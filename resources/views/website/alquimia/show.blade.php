@@ -116,7 +116,7 @@
             <!-- Créditos -->
             <div class="mt-3 text-center text-muted small">
                 <p class="mb-0">
-                    Publicado por: <a href="#" class="fw-bold text-decoration-none">{{ $alchemy->user->name }}</a>
+                    Publicado por: <a href="{{ route('website.profile.index', ['username' => $herb->user->username]) }}" class="fw-bold text-decoration-none">{{ $alchemy->user->name }}</a>
                     | Publicado em: <span class="fw-semibold">{{ $alchemy->created_at->format('d/m/Y') }}</span>
                 </p>
             </div>

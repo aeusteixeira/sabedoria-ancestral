@@ -108,7 +108,7 @@ Conecte-se com a natureza e com o universo
             <!-- Créditos -->
             <div class="mt-3 text-center text-muted small">
                 <p class="mb-0">
-                    Publicado por: <a href="#" class="fw-bold text-decoration-none">{{ $herb->user->name }}</a>
+                    Publicado por: <a href="{{ route('website.profile.index', ['username' => $herb->user->username]) }}" class="fw-bold text-decoration-none">{{ $herb->user->name }}</a>
                     | Publicado em: <span class="fw-semibold">{{ $herb->created_at->format('d/m/Y') }}</span>
                     | Revisado por <span class="fw-semibold">2 pessoas</span>.
                 </p>
@@ -119,34 +119,9 @@ Conecte-se com a natureza e com o universo
             <!-- Receitas Mágicas com a Erva -->
             <h3 class="mb-3 text-center">✨ Receitas Mágicas com {{ $herb->name }}</h3>
             <div class="row">
-                @forelse ($herb->alchemies as $alchemie)
+                @forelse ($herb->alchemies as $alchemy)
                     <div class="mb-2 col-sm-12 col-md-6 col-lg-4">
-                        <div class="border-0 shadow-sm card h-100">
-                            <img src="{{ $alchemie->image_url }}"
-                                 class="card-img-top rounded-top"
-                                 alt="{{ $alchemie->name }}"
-                                 style="height: 200px; object-fit: cover;">
-
-                            <div class="p-3 card-body d-flex flex-column">
-                                <h5 class="text-center card-title">
-                                    {{ $alchemie->name }}
-                                </h5>
-                                <div class="text-center">
-                                    <span class="px-3 py-2 badge" style="{{ $alchemie->full_color_type }}">
-                                        {{ $alchemie->full_type_name }}
-                                    </span>
-                                </div>
-                                <hr>
-                                <p class="text-justify text-muted card-text">
-                                    {{ Str::limit($alchemie->description, 100) }}
-                                </p>
-                                <div class="mt-auto text-center">
-                                    <a class="btn btn-success w-100" href="{{ route('website.alchemy.show', ['slug' => $alchemie->slug]) }}">
-                                        Ver mais
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <x-card :item="$alchemy" route="website.alchemy.show" type="alchemy" />
                     </div>
                 @empty
                     <p class="text-center text-muted">Nenhuma receita encontrada para esta erva.</p>

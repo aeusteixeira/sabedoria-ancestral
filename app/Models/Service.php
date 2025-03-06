@@ -14,10 +14,13 @@ class Service extends Model
         'title',
         'description',
         'price',
-        'type',
+        'presencial',
         'contact_info',
         'active',
-        'user_id',
+        'city',
+        'state',
+        'image',
+        'user_id'
     ];
 
     public function user()

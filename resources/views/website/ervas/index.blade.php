@@ -61,33 +61,7 @@
     <div id="herbList" class="row">
         @forelse ($herbs as $herb)
             <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="mb-4 border-0 shadow-sm card h-100">
-                    <img src="{{ $herb->image_url }}" class="card-img-top rounded-top"
-                         alt="{{ $herb->name }}" title="{{ $herb->name }}"
-                         style="height: 200px; object-fit: cover;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="text-center card-title fw-bold text-dark">
-                            {{ $herb->name }}
-                        </h5>
-
-                        <!-- Badges -->
-                        <h6 class="flex-wrap gap-2 mb-2 text-center d-flex justify-content-center">
-                            <x-badge :content="$herb->temperature->name" :colorBackground="$herb->temperature->color_background" :colorText="$herb->temperature->color_text" :icon="$herb->temperature->symbol" />
-                                <x-badge :content="$herb->planet->name" :colorBackground="$herb->planet->color_background" :colorText="$herb->planet->color_text" :icon="$herb->planet->symbol" />
-                                <x-badge :content="$herb->element->name" :colorBackground="$herb->element->color_background" :colorText="$herb->element->color_text" :icon="$herb->element->symbol" />
-                        </h6>
-
-                        <p class="text-muted text-start">
-                            {{ Str::limit($herb->description, 120) }}
-                        </p>
-
-                        <div class="mt-auto text-center">
-                            <a href="{{ route('website.herb.show', ['slug' => $herb->slug]) }}" class="btn btn-success w-100">
-                                🌿 Ver Detalhes
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <x-card :item="$herb" route="website.herb.show" type="herb" />
             </div>
         @empty
             <div class="text-center col-12">
