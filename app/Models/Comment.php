@@ -13,6 +13,7 @@ class Comment extends Model
     protected $fillable = [
         'user_id',
         'alchemy_id',
+        'service_id',
         'content',
         'rating',
         'parent_id',
@@ -31,5 +32,10 @@ class Comment extends Model
     public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 }

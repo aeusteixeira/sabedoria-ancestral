@@ -11,66 +11,112 @@
                 <!-- Título do Serviço -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">📌 Título do Serviço</label>
-                    <input type="text" name="title" class="form-control" placeholder="Ex: Leitura de Tarô" required>
+                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                           placeholder="Ex: Leitura de Tarô" value="{{ old('title') }}" required>
+                    @error('title')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Tipo de Serviço -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">📍 Tipo</label>
-                    <select name="type" class="form-select" required id="type">
-                        <option value="presencial">Presencial</option>
-                        <option value="online">Online</option>
+                    <select name="type" class="form-select @error('type') is-invalid @enderror" required id="type">
+                        <option value="presencial" {{ old('type') == 'presencial' ? 'selected' : '' }}>Presencial</option>
+                        <option value="online" {{ old('type') == 'online' ? 'selected' : '' }}>Online</option>
                     </select>
+                    @error('type')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
-                <!-- Cidade -->
                 <!-- Estado -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">🗺️ Estado</label>
-                    <input list="stateList" name="state" id="state" class="form-control"
-                        placeholder="Digite ou selecione um estado" required>
-                    <datalist id="stateList">
-                        <!-- Os estados serão carregados dinamicamente via JS -->
-                    </datalist>
+                    <input list="stateList" name="state" id="state" class="form-control @error('state') is-invalid @enderror"
+                        placeholder="Digite ou selecione um estado" value="{{ old('state') }}" required>
+                    <datalist id="stateList"></datalist>
+                    @error('state')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Cidade -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">🏙️ Cidade</label>
-                    <input list="cityList" name="city" id="city" class="form-control"
-                        placeholder="Digite ou selecione uma cidade" required>
-                    <datalist id="cityList">
-                        <!-- As cidades serão carregadas com base no estado selecionado -->
-                    </datalist>
+                    <input list="cityList" name="city" id="city" class="form-control @error('city') is-invalid @enderror"
+                        placeholder="Digite ou selecione uma cidade" value="{{ old('city') }}" required>
+                    <datalist id="cityList"></datalist>
+                    @error('city')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
-
 
                 <!-- Preço -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">💰 Preço</label>
-                    <input type="text" name="price" class="form-control"
-                        placeholder="Digite o valor ou deixe em branco para 'A combinar'">
+                    <input type="text" name="price" class="form-control @error('price') is-invalid @enderror"
+                        placeholder="Digite o valor ou deixe em branco para 'A combinar'" value="{{ old('price') }}">
+                    @error('price')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">📸 Imagem do Serviço</label>
+                    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                    @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Tipo de Contato -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">📞 Tipo de Contato</label>
+                    <select name="contact_type" class="form-select" required id="contact_type">
+                        <option value="whatsapp" {{ old('contact_type', $service->contact_type ?? '') == 'whatsapp' ? 'selected' : '' }}>WhatsApp</option>
+                        <option value="telefone" {{ old('contact_type', $service->contact_type ?? '') == 'telefone' ? 'selected' : '' }}>Telefone</option>
+                        <option value="email" {{ old('contact_type', $service->contact_type ?? '') == 'email' ? 'selected' : '' }}>E-mail</option>
+                        <option value="instagram" {{ old('contact_type', $service->contact_type ?? '') == 'instagram' ? 'selected' : '' }}>Instagram</option>
+                        <option value="telegram" {{ old('contact_type', $service->contact_type ?? '') == 'telegram' ? 'selected' : '' }}>Telegram</option>
+                        <option value="facebook" {{ old('contact_type', $service->contact_type ?? '') == 'facebook' ? 'selected' : '' }}>Facebook</option>
+                        <option value="link" {{ old('contact_type', $service->contact_type ?? '') == 'link' ? 'selected' : '' }}>Link</option>
+                    </select>
+                </div>
+
 
                 <!-- Contato -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">📞 Contato</label>
-                    <input type="text" name="contact_info" class="form-control" placeholder="Ex: WhatsApp, E-mail"
-                        required>
+                    <input type="text" name="contact_info" id="contact_info" class="form-control"
+                        placeholder="Digite o número ou link" value="{{ old('contact_info', $service->contact_info ?? '') }}" required>
                 </div>
 
                 <!-- Imagem do Serviço -->
-                <div class="col-md-12">
-                    <label class="form-label fw-semibold">📸 Imagem do Serviço</label>
-                    <input type="file" name="image" class="form-control">
-                </div>
+
 
                 <!-- Descrição -->
                 <div class="col-md-12">
                     <label class="form-label fw-semibold">📝 Descrição</label>
-                    <textarea name="description" class="form-control" rows="3"
-                        placeholder="Descreva o serviço..."></textarea>
+                    <textarea name="description" class="form-control editor @error('description') is-invalid @enderror"
+                        rows="3" placeholder="Descreva o serviço...">{{ old('description') }}</textarea>
+                    @error('description')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
+
+                <!-- Demais erros -->
+                @if ($errors->any())
+                    <div class="col-md-12">
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
 
                 <!-- Botões -->
                 <div class="mt-3 text-center">
@@ -84,6 +130,20 @@
 @stop
 
 @section('js')
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.editor').forEach((element) => {
+            ClassicEditor
+                .create(element)
+                .then(editor => {
+                    editor.ui.view.editable.element.style.height = '200px';
+                    editor.ui.view.editable.element.style.maxHeight = '200px';
+                })
+                .catch(error => console.error(error));
+        });
+    });
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let estados = {}; // Objeto para mapear nome -> sigla
@@ -93,7 +153,7 @@
             .then(response => response.json())
             .then(data => {
                 let stateList = document.getElementById('stateList');
-                
+
                 data.forEach(state => {
                     estados[state.nome] = state.sigla; // Mapeia Nome -> Sigla
                     let option = document.createElement('option');
@@ -145,6 +205,27 @@
         });
     });
 </script>
-
-
+<script>
+    document.getElementById("contact_type").addEventListener("change", function () {
+        let contactInput = document.getElementById("contact_info");
+        if (this.value === "whatsapp") {
+            contactInput.placeholder = "Digite o número do WhatsApp (com DDD)";
+        } else if (this.value === "telefone") {
+            contactInput.placeholder = "Digite o número do telefone (com DDD)";
+        } else if (this.value === "email") {
+            contactInput.placeholder = "Digite o e-mail";
+        } else if (this.value === "instagram") {
+            contactInput.placeholder = "Digite o link do Instagram";
+        } else if (this.value === "telegram") {
+            contactInput.placeholder = "Digite o link do Telegram";
+        } else if (this.value === "facebook") {
+            contactInput.placeholder = "Digite o link do Facebook";
+        } else if (this.value === "link") {
+            contactInput.placeholder = "Digite o link";
+        }else{
+            contactInput.placeholder = "Digite o número ou link";
+        }
+    });
+</script>
 @stop
+

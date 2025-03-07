@@ -17,6 +17,12 @@ class User extends Authenticatable
         'name',
         'username',
         'email',
+        'coins',
+        'level',
+        'is_admin',
+        'is_moderator',
+        'is_banned',
+        'description',
         'password',
     ];
 

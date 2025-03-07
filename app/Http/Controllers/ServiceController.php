@@ -6,6 +6,8 @@ use App\Models\Service;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -34,29 +36,52 @@ class ServiceController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreServiceRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated(); // Pegando apenas os dados validados
         $data['user_id'] = Auth::id();
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('services', 'public');
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $path = $request->file('image')->store('services', 'public'); // Salva a imagem na pasta "storage/app/public/services"
+            $data['image'] = $path;
         }
 
-        Service::create($data);
+        $service = Service::create($data);
 
-        return redirect()->route('website.service.index')->with('success', 'Serviço cadastrado com sucesso!');
+        return redirect()->route('website.service.show', ['slug' => $service->slug])
+                         ->with('success', 'Serviço cadastrado com sucesso!');
+    }
+
+    public function comment(Request $request, $slug)
+    {
+        $service = Service::where('slug', $slug)->firstOrFail();
+        $service->comments()->create([
+            'user_id' => Auth::id(),
+            'content' => $request->input('content'),
+        ]);
+        return redirect()->route('website.service.show', ['slug' => $service->slug]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Service $service)
+    public function show($slug)
     {
-        //
+        $service = Service::where('slug', $slug)->firstOrFail();
+
+        // O SEO do serviço deve ser estruturado com base no nome do serviço
+        $seo = $this->generateSeo(
+            $service->title,
+            $service->description,
+            [$service->slug],
+            'website.service.show',
+            $slug
+        );
+
+        return view('website.service.show', [
+            'service' => $service,
+            'seo' => $seo
+        ]);
     }
 
     /**

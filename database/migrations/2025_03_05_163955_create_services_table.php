@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->string('slug')->unique();
             $table->decimal('price', 10, 2)->nullable();
             $table->enum('type', ['presencial', 'online'])->default('presencial');
+            $table->enum('contact_type', ['whatsapp', 'link', 'telefone', 'email', 'instagram', 'telegram', 'facebook'])
+            ->default('whatsapp');
             $table->string('contact_info');
             $table->boolean('active')->default(true);
             $table->string('city')->nullable();

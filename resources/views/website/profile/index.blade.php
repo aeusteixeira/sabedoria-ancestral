@@ -96,7 +96,7 @@
                             </div>
                             <div class="row">
                                 @forelse($user->services as $service)
-                                <div class="col-md-6">
+                                <div class="mb-3 col-md-6">
                                     <x-card-service :service="$service" />
                                 </div>
                                 @empty

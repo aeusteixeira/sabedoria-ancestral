@@ -38,6 +38,7 @@ Route::group(['prefix' => '/', 'as' => 'website.'], function () {
 
     // 💬 Comentários
     Route::post('/alquimias/{slug}/comentar', [AlchemyController::class, 'comment'])->name('alchemy.comment');
+    Route::post('/servicos/{slug}/comentar', [ServiceController::class, 'comment'])->name('service.comment');
 
     // 💼 Serviços
     Route::get('/servicos', [ServiceController::class, 'index'])->name('service.index');
