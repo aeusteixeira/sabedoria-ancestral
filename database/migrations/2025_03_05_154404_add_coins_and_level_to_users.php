@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->integer('coins')->default(0);
             $table->integer('level')->default(1);
+            $table->integer('xp')->default(0);
+            $table->integer('next_level_xp')->default(100);
         });
     }
 

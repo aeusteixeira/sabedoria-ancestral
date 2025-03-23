@@ -8,6 +8,7 @@ use Illuminate\View\Component;
 
 class HeaderPage extends Component
 {
+    public $complement;
     public $title;
     public $description;
     public $id;
@@ -15,10 +16,11 @@ class HeaderPage extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($title, $description, $id = null)
+    public function __construct($title, $description, $complement = null, $id = null)
     {
         $this->title = $title;
         $this->description = $description;
+        $this->complement = $complement;
         $this->id = $id;
     }
 
@@ -29,7 +31,9 @@ class HeaderPage extends Component
     {
         return view('components.header-page', [
             'title' => $this->title,
-            'description' => $this->description
+            'description' => $this->description,
+            'complement' => $this->complement,
+            'id' => $this->id
         ]);
     }
 }

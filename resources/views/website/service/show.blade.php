@@ -34,20 +34,20 @@
 
                 <x-contact-button :type="$service->contact_type" :info="$service->contact_info" />
                 @if ($service->user_id == auth()->id())
-                <hr>
-                <div class="gap-2 d-flex">
-                        <a href="{{ route('website.service.edit', ['slug' => $service->slug]) }}" class="btn btn-secondary btn-sm">
-                            <i class="fa fa-pencil"></i>
-                            Editar
-                        </a>
-                        <form action="{{ route('website.service.destroy', ['slug' => $service->slug]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este serviço?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="fa fa-trash"></i>
-                                Excluir
-                            </button>
-                        </form>
+                    <hr>
+                    <div class="gap-2 d-flex">
+                            <a href="{{ route('website.service.edit', ['slug' => $service->slug]) }}" class="btn btn-secondary btn-sm">
+                                <i class="fa fa-pencil"></i>
+                                Editar
+                            </a>
+                            <form action="{{ route('website.service.destroy', ['slug' => $service->slug]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este serviço?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                    Excluir
+                                </button>
+                            </form>
                     </div>
                 @endif
             </div>

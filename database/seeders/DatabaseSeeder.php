@@ -32,7 +32,9 @@ class DatabaseSeeder extends Seeder
             AlchemySeeder::class,
             AlchemyHerbStoneSeeder::class,
             ChakraHerb::class,
-            ServiceSeeder::class
+            ServiceSeeder::class,
+            XPSeeder::class,
+            MessageSeeder::class,
         ]);
 
         User::factory()->create([

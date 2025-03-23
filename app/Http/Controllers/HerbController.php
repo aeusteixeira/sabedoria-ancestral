@@ -10,6 +10,8 @@ use App\Models\Element;
 use App\Models\Planet;
 use App\Models\Temperature;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class HerbController extends Controller
 {
@@ -100,10 +102,26 @@ class HerbController extends Controller
      */
     public function store(StoreHerbRequest $request)
     {
-        $herb = new Herb($request->all());
-        $herb->save();
+        // Upload da imagem, se fornecida
+        $imagePath = $request->file('image')
+        ? $request->file('image')->store('alchemies', 'public')
+        : null;
+        $herb = Herb::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'history_origin' => $request->history_origin,
+            'magical_uses' => $request->magical_uses,
+            'biological_uses' => $request->biological_uses,
+            'precautions' => $request->precautions,
+            'image' => $imagePath,
+            'planet_regent_id' => $request->planet_regent_id,
+            'element_regent_id' => $request->element_regent_id,
+            'temperature_regent_id' => $request->temperature_regent_id,
+            'user_id' => Auth::id(),
+        ]);
+
         $herb->chakras()->sync($request->chakras);
-        return redirect()->route('website.herb.show', ['slug' => $herb->slug]);
+        return redirect()->route('website.herb.show', ['slug' => $herb->slug])->with('success', 'Alquimia criada com sucesso!');
     }
 
     /**
@@ -131,24 +149,77 @@ class HerbController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Herb $herb)
+    public function edit($slug)
     {
-        //
+        $herb = Herb::where('slug', $slug)->firstOrFail();
+        $temperatures = Temperature::all();
+        $planets = Planet::all();
+        $elements = Element::all();
+        $chakras = Chakra::all();
+
+        $seo = $this->generateSeo(
+            'Editar erva',
+            'Atualize as informações da erva cadastrada',
+            ['editar', 'erva'],
+            'website.herb.edit',
+            $slug
+        );
+
+        return view('website.ervas.edit', [
+            'seo' => $seo,
+            'herb' => $herb,
+            'temperatures' => $temperatures,
+            'planets' => $planets,
+            'elements' => $elements,
+            'chakras' => $chakras
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateHerbRequest $request, Herb $herb)
+    public function update(UpdateHerbRequest $request)
     {
-        //
+        $herb = Herb::where('id', $request->id)->firstOrFail();
+        // Se houver uma nova imagem, armazena e remove a antiga
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('alchemies', 'public');
+
+            // Remove a imagem antiga, se existir
+            if ($herb->image) {
+                Storage::disk('public')->delete($herb->image);
+            }
+
+            // Atualiza o campo de imagem do modelo
+            $herb->image = $imagePath;
+        }
+
+        // Atualiza os dados da erva (exceto chakras)
+        $herb->update($request->except('chakras', 'image'));
+
+        // 🔄 Verifica se o ID da erva está disponível antes do sync
+        if (!$herb->id) {
+            return back()->with('error', 'Erro ao atualizar a erva. Tente novamente.');
+        }
+
+        // 🔄 Sincroniza os chakras corretamente
+        if ($request->has('chakras')) {
+            $herb->chakras()->sync($request->chakras);
+        } else {
+            $herb->chakras()->detach(); // Remove todos os chakras caso nenhum seja selecionado
+        }
+
+        return redirect()->route('website.herb.show', ['slug' => $herb->slug])
+            ->with('success', 'Erva atualizada com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Herb $herb)
+    public function destroy(Request $request)
     {
-        //
+        $herb = Herb::where('id', $request->id)->firstOrFail();
+        $herb->delete();
+        return redirect()->route('website.herb.index')->with('success', 'Alquimia excluida com sucesso!');
     }
 }

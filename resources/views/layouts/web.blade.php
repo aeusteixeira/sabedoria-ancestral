@@ -49,7 +49,7 @@
 
 <body class="bg-green-1">
     <nav class="shadow-sm navbar navbar-expand-lg navbar-dark bg-dark d-none d-lg-flex">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand site-title" href="{{ route('website.index') }}">Sabedoria Ancestral</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,9 +63,13 @@
                     ['route' => 'website.sobre', 'icon' => '📜', 'label' => 'Sobre'],
                     ['route' => 'website.herb.index', 'icon' => '🌿', 'label' => 'Ervas'],
                     ['route' => 'website.alchemy.index', 'icon' => '🔮', 'label' => 'Alquimias'],
+                    ['route' => 'website.service.index', 'icon' => '🎯', 'label' => 'Serviços'],
                     ['route' => 'website.calendario-lunar', 'icon' => '🌙', 'label' => 'Calendário Lunar'],
                     ['route' => 'website.planetas', 'icon' => '🪐', 'label' => 'Planetas'],
-                    ['route' => 'website.hora-planetaria', 'icon' => '⏳', 'label' => 'Hora Planetária']
+                    ['route' => 'website.hora-planetaria', 'icon' => '⏳', 'label' => 'Hora Planetária'],
+                    ['route' => 'website.elementos', 'icon' => '🌪️', 'label' => 'Elementos'],
+                    ['route' => 'website.numeros-misticos', 'icon' => '🔢', 'label' => 'Números Místicos'],
+                    ['route' => 'website.chakras', 'icon' => '🧘', 'label' => 'Chakras']
                     ] as $menuItem)
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs($menuItem['route']) ? 'active' : '' }}"
@@ -109,6 +113,19 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
+                            {{--
+                            <li>
+                                <a class="dropdown-item" href="{{ route('website.profile.messages') }}">
+                                    <i class="fas fa-envelope"></i> Mensagens
+                                    @if(Auth::user()->unreadMessagesCount() > 0)
+                                        <span class="badge bg-danger">{{ Auth::user()->unreadMessagesCount() }}</span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            --}}
                             <li>
                                 <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -7,7 +7,7 @@ Conecte-se com a natureza e com o universo
 @stop
 
 @section('content')
-<section  >
+<section>
     <div class="mb-4 border-0 rounded shadow-sm card">
         <div class="p-4 card-body">
             <div class="row">
@@ -72,14 +72,81 @@ Conecte-se com a natureza e com o universo
                                 @endforelse
                             </div>
                         </div>
+                        @if ($herb->user_id == auth()->user()->id)
+                        <hr>
+                            <div class="d-flex">
+                                <a href="{{ route('website.herb.edit', ['slug' => $herb->slug]) }}" class="btn btn-primary btn-sm me-2">
+                                    <i class="fa fa-pencil"></i> Editar
+                                </a>
+                                <!-- Botão para exclusão abre modal para confirmar o nome, similar ao deletar repo no git -->
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <i class="fa fa-trash"></i> Excluir
+                                </button>
+
+                                <!-- Modal de Exclusão -->
+                                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content border-danger">
+                                            <div class="text-white modal-header bg-danger">
+                                                <h5 class="modal-title" id="deleteModalLabel">⚠️ Confirmar Exclusão</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                            </div>
+                                            <div class="text-center modal-body">
+                                                <p class="fs-5">Você está prestes a excluir <strong>"{{ $herb->name }}"</strong>.</p>
+                                                <p class="text-danger fw-bold">Essa ação é irreversível!</p>
+
+                                                <!-- Campo de Confirmação -->
+                                                <p class="mt-3">Para confirmar, digite o nome da erva abaixo:</p>
+                                                <input type="text" class="text-center form-control" id="name_confirme" placeholder="{{ $herb->name }}">
+
+                                                <small class="text-danger d-none" id="error-message">O nome digitado não confere.</small>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    <i class="fa fa-times"></i> Cancelar
+                                                </button>
+                                                <form action="{{ route('website.herb.destroy', ['id' => $herb->id]) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" id="delete-button" class="btn btn-danger" disabled>
+                                                        <i class="fa fa-trash"></i> Excluir
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Script de Validação -->
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const name = @json($herb->name);
+                                        const input = document.getElementById('name_confirme');
+                                        const errorMessage = document.getElementById('error-message');
+                                        const deleteButton = document.getElementById('delete-button');
+
+                                        input.addEventListener('input', function () {
+                                            if (this.value.trim() === name.trim()) {
+                                                this.classList.remove('is-invalid');
+                                                errorMessage.classList.add('d-none');
+                                                deleteButton.removeAttribute('disabled');
+                                            } else {
+                                                this.classList.add('is-invalid');
+                                                errorMessage.classList.remove('d-none');
+                                                deleteButton.setAttribute('disabled', 'true');
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                            </div>
+                        @endif
                     </div>
 
 
                 </div>
             </div>
-
             <hr>
-
             <!-- Informações Detalhadas -->
             <div class="row">
                 <div class="col-md-6">
@@ -102,9 +169,7 @@ Conecte-se com a natureza e com o universo
                     <p class="text-secondary">{{ $herb->precautions }}</p>
                 </div>
             </div>
-
             <hr>
-
             <!-- Créditos -->
             <div class="mt-3 text-center text-muted small">
                 <p class="mb-0">
@@ -129,16 +194,54 @@ Conecte-se com a natureza e com o universo
             </div>
         </div>
     </div>
-
-
-
 </section>
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/ervas.css') }}">
+<audio id="confettiSound" preload="auto">
+    <source src="https://matheusteixeira.com.br/wp-content/uploads/2025/03/Confetti-2.mp3" type="audio/mpeg">
+</audio>
 @stop
 
 @section('js')
-    <script src="{{ asset('js/ervas.js') }}"></script>
+@if(session('success'))
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+                // Obtém o elemento de áudio do HTML
+                let confettiSound = document.getElementById("confettiSound");
+
+                // Ajusta o volume e toca o som
+                confettiSound.volume = 0.5; // 50% do volume
+                confettiSound.play();
+
+                // Define a duração da animação (5 segundos)
+                const end = Date.now() + 1 * 1000;
+
+                // Cores dos confetes
+                const colors = ["#ff0000", "#ff9100", "#ffff00", "#00ff00", "#0091ff", "#b400ff"];
+
+                // Função para animar os confetes
+                (function frame() {
+                    confetti({
+                        particleCount: 3,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 },
+                        colors: colors,
+                    });
+
+                    confetti({
+                        particleCount: 3,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 },
+                        colors: colors,
+                    });
+
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                })();
+        });
+    </script>
+@endif
 @stop

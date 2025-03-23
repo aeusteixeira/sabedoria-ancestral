@@ -6,6 +6,7 @@
     <x-header-page
         :title="$seo['title']"
         :description="$seo['description']"
+        complement="Saberes da Natureza"
     />
 
     <section class="p-4 mb-4 rounded shadow-sm bg-light">

@@ -3,6 +3,7 @@
 @section('content')
 <section>
     <x-header-page
+        complement="Magias, Feitiços, Rituais, Chás e Banhos"
         :title="$seo['title']"
         :description="$seo['description']"
     />

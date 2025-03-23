@@ -91,4 +91,18 @@ class WebsiteController extends Controller
         return view('website.tools.planetas', compact('seo'));
     }
 
+    public function numerosMisticos()
+    {
+        return view('website.tools.numeros-misticos');
+    }
+
+    public function elementos()
+    {
+        return view('website.tools.elementos');
+    }
+
+    public function chakras()
+    {
+        return view('website.tools.chakras');
+    }
 }

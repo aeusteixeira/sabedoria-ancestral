@@ -34,7 +34,10 @@ class Herb extends Model
         parent::boot();
         self::creating(function ($model) {
             $model->slug = \Illuminate\Support\Str::slug($model->name);
-            //$model->user_id = Auth::user()->id;
+        });
+
+        self::updating(function ($model) {
+            $model->slug = \Illuminate\Support\Str::slug($model->name);
         });
     }
 

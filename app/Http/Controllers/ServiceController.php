@@ -6,18 +6,65 @@ use App\Models\Service;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $seo = $this->generateSeo(
+            'Serviços Esotéricos',
+            'Descubra os serviços esotéricos e adquira novos clientes',
+            ['servicos', 'esotericos'],
+            'website.service.index'
+        );
+
+        // 🔍 Filtrando os serviços com base nos parâmetros do request
+        $services = Service::query();
+
+        if ($request->filled('searchTitle')) {
+            $services->where('title', 'like', '%' . $request->searchTitle . '%');
+        }
+
+        if ($request->filled('city')) {
+            $services->where('city', 'like', '%' . $request->city . '%');
+        }
+
+        if ($request->filled('state')) {
+            $services->where('state', 'like', '%' . $request->state . '%');
+        }
+
+        if ($request->filled('contactType')) {
+            $services->where('contact_type', $request->contactType);
+        }
+
+        if ($request->filled('presencial')) {
+            $services->where('type', $request->type == '0' ? 'presencial' : 'online');
+        }
+
+        if ($request->filled('priceFilter')) {
+            if ($request->priceFilter == 'low') {
+                $services->where('price', '<', 50);
+            } elseif ($request->priceFilter == 'medium') {
+                $services->whereBetween('price', [50, 200]);
+            } elseif ($request->priceFilter == 'high') {
+                $services->where('price', '>', 200);
+            }
+        }
+
+        // Paginação com filtros aplicados
+        $services = $services->paginate(10)->appends($request->query());
+
+        return view('website.service.index', [
+            'seo' => $seo,
+            'services' => $services
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

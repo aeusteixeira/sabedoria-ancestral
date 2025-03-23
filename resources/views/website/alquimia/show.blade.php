@@ -270,12 +270,15 @@
 
 
 </section>
+<audio id="confettiSound" preload="auto">
+    <source src="https://matheusteixeira.com.br/wp-content/uploads/2025/03/Confetti-2.mp3" type="audio/mpeg">
+</audio>
+
 @stop
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
-
-    <!-- Estilos para as estrelas -->
+<!-- Estilos para as estrelas -->
 <style>
     .rating {
         display: flex;
@@ -300,7 +303,6 @@
 @stop
 
 @section('js')
-<script src="{{ asset('js/ervas.js') }}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Quando clicar no botão "Responder"
@@ -329,5 +331,49 @@
         });
     });
 </script>
+@if(session('success'))
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+            // Obtém o elemento de áudio do HTML
+            let confettiSound = document.getElementById("confettiSound");
+
+            // Ajusta o volume e toca o som
+            confettiSound.volume = 0.5; // 50% do volume
+            confettiSound.play();
+
+            // Define a duração da animação (5 segundos)
+            const end = Date.now() + 1 * 1000;
+
+            // Cores dos confetes
+            const colors = ["#ff0000", "#ff9100", "#ffff00", "#00ff00", "#0091ff", "#b400ff"];
+
+            // Função para animar os confetes
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors,
+                });
+
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors,
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+    });
+</script>
+@endif
 
 @stop
