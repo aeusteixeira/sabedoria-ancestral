@@ -105,4 +105,9 @@ class WebsiteController extends Controller
     {
         return view('website.tools.chakras');
     }
+
+    public function sabbats()
+    {
+        return view('website.tools.sabbats');
+    }
 }

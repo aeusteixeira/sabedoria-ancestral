@@ -37,15 +37,15 @@
                     <p class="mb-4">
                         O <strong>Sabedoria Ancestral</strong> nasceu a partir das vivências e ensinamentos do <strong>Instituto Xamânico Ancestral de Nova Iguaçu</strong>, um espaço dedicado ao resgate das tradições espirituais, ao estudo das medicinas da floresta e à conexão profunda com a sabedoria ancestral.
                     </p>
-                    <p class="mb-4">
+    <p class="mb-4">
                         Inspirado na caminhada xamânica, este portal foi criado para expandir esse conhecimento, tornando-o acessível a todos que buscam compreender e aplicar práticas espirituais em suas jornadas.
-                    </p>
-                    <p class="mb-4">
-                        Nosso objetivo é compartilhar saberes antigos que transcendem o tempo, promovendo o <strong>autoconhecimento, a cura e a harmonia com o universo</strong>. Através do Sabedoria Ancestral, você terá acesso a conteúdos sobre astrologia, ervas mágicas, cristais, baralho cigano, magia, práticas esotéricas e rituais que auxiliam na transformação pessoal e no despertar espiritual.
-                    </p>
+    </p>
+    <p class="mb-4">
+        Nosso objetivo é compartilhar saberes antigos que transcendem o tempo, promovendo o <strong>autoconhecimento, a cura e a harmonia com o universo</strong>. Através do Sabedoria Ancestral, você terá acesso a conteúdos sobre astrologia, ervas mágicas, cristais, baralho cigano, magia, práticas esotéricas e rituais que auxiliam na transformação pessoal e no despertar espiritual.
+    </p>
                     <p>
-                        Aqui, cada elemento foi pensado para guiar aqueles que trilham o caminho da espiritualidade, respeitando e honrando as tradições sagradas que nos conectam com a natureza e o divino. Seja bem-vindo a este espaço de aprendizado, troca e evolução.
-                    </p>
+        Aqui, cada elemento foi pensado para guiar aqueles que trilham o caminho da espiritualidade, respeitando e honrando as tradições sagradas que nos conectam com a natureza e o divino. Seja bem-vindo a este espaço de aprendizado, troca e evolução.
+    </p>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                         <span class="display-5">👤</span>
                     </div>
                     <h2 class="mb-4 h4">Fundador e Dirigente</h2>
-                    <p class="mb-4">
+    <p class="mb-4">
                         O Sabedoria Ancestral é idealizado e conduzido por <strong>Matheus Teixeira</strong>, fundador e dirigente do <strong>Instituto Xamânico Ancestral de Nova Iguaçu</strong>, seguindo a ordem e os ensinamentos do <strong>Caboclo Cobra Branca</strong>.
                     </p>
                     <p>

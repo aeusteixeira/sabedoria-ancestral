@@ -11,7 +11,7 @@
                     <!-- Foto do perfil com efeito hover -->
                     <div class="position-relative d-inline-block">
                         <img src="{{ $user->profile_image }}" class="mb-3 rounded-circle" width="150" height="150"
-                            alt="Foto de {{ $user->name }}">
+                        alt="Foto de {{ $user->name }}">
                     </div>
 
                     <h3 class="mb-2 fw-bold">{{ $user->name }}</h3>
@@ -115,10 +115,10 @@
                     <h5 class="mb-3 fw-bold">🏅 Emblemas</h5>
                     <div class="flex-wrap gap-2 d-flex justify-content-center">
                         @foreach($badges as $badge)
-                            @php
-                                $conquistado = $user->badges->contains($badge->id);
+                        @php
+                            $conquistado = $user->badges->contains($badge->id);
                                 $badgeStyle = $conquistado ? "background-color: {$badge->color_background}; color: {$badge->color_text};" : "background-color: #eee; color: #999;";
-                            @endphp
+                        @endphp
                             <div class="text-center" data-bs-toggle="tooltip" title="{{ $badge->description }}">
                                 <div class="p-2 mb-1 rounded" style="{{ $badgeStyle }}">
                                     <span style="font-size: 24px;">{!! $badge->symbol !!}</span>
@@ -172,8 +172,8 @@
                             <div class="row g-4">
                                 @forelse($user->services as $service)
                                     <div class="col-md-6">
-                                        <x-card-service :service="$service" />
-                                    </div>
+                                    <x-card-service :service="$service" />
+                                </div>
                                 @empty
                                     <div class="col-12">
                                         <div class="py-5 text-center">
@@ -190,16 +190,16 @@
                             <div class="mb-4 d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0 fw-bold">🔮 Alquimias Criadas</h5>
                                 @if (Auth::user()->id == $user->id)
-                                    <a href="{{ route('website.alchemy.create') }}" class="btn btn-sm btn-success">
+                                <a href="{{ route('website.alchemy.create') }}" class="btn btn-sm btn-success">
                                         <i class="fas fa-plus me-2"></i>Nova Alquimia
-                                    </a>
+                                </a>
                                 @endif
                             </div>
                             <div class="row g-4">
                                 @forelse($user->alchemies as $alchemy)
-                                    <div class="col-md-6">
-                                        <x-card :item="$alchemy" route="website.alchemy.show" type="alchemy" page="profile" />
-                                    </div>
+                                <div class="col-md-6">
+                                    <x-card :item="$alchemy" route="website.alchemy.show" type="alchemy" page="profile" />
+                                </div>
                                 @empty
                                     <div class="col-12">
                                         <div class="py-5 text-center">
@@ -216,16 +216,16 @@
                             <div class="mb-4 d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0 fw-bold">🌿 Ervas Cadastradas</h5>
                                 @if (Auth::user()->id == $user->id)
-                                    <a href="{{ route('website.herb.create') }}" class="btn btn-sm btn-success">
+                                <a href="{{ route('website.herb.create') }}" class="btn btn-sm btn-success">
                                         <i class="fas fa-plus me-2"></i>Nova Erva
-                                    </a>
+                                </a>
                                 @endif
                             </div>
                             <div class="row g-4">
                                 @forelse($user->herbs as $herb)
-                                    <div class="col-md-6">
-                                        <x-card :item="$herb" route="website.herb.show" type="herb" page="profile" />
-                                    </div>
+                                <div class="col-md-6">
+                                    <x-card :item="$herb" route="website.herb.show" type="herb" page="profile" />
+                                </div>
                                 @empty
                                     <div class="col-12">
                                         <div class="py-5 text-center">

@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             ServiceSeeder::class,
             XPSeeder::class,
             MessageSeeder::class,
+            MagicalIntentionsSeeder::class,
         ]);
 
         User::factory()->create([

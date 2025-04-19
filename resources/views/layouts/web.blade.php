@@ -63,13 +63,7 @@
                     ['route' => 'website.sobre', 'icon' => '📜', 'label' => 'Sobre'],
                     ['route' => 'website.herb.index', 'icon' => '🌿', 'label' => 'Ervas'],
                     ['route' => 'website.alchemy.index', 'icon' => '🔮', 'label' => 'Alquimias'],
-                    ['route' => 'website.service.index', 'icon' => '🎯', 'label' => 'Serviços'],
-                    ['route' => 'website.calendario-lunar', 'icon' => '🌙', 'label' => 'Calendário Lunar'],
-                    ['route' => 'website.planetas', 'icon' => '🪐', 'label' => 'Planetas'],
-                    ['route' => 'website.hora-planetaria', 'icon' => '⏳', 'label' => 'Hora Planetária'],
-                    ['route' => 'website.elementos', 'icon' => '🌪️', 'label' => 'Elementos'],
-                    ['route' => 'website.numeros-misticos', 'icon' => '🔢', 'label' => 'Números Místicos'],
-                    ['route' => 'website.chakras', 'icon' => '🧘', 'label' => 'Chakras']
+                    ['route' => 'website.service.index', 'icon' => '🎯', 'label' => 'Serviços']
                     ] as $menuItem)
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs($menuItem['route']) ? 'active' : '' }}"
@@ -78,6 +72,63 @@
                         </a>
                     </li>
                     @endforeach
+
+                    <!-- Dropdown de Ferramentas -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            🛠️ Ferramentas
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="toolsDropdown">
+                            <li>
+                                <a class="dropdown-item {{ request()->routeIs('website.calendario-lunar') ? 'active' : '' }}"
+                                   href="{{ route('website.calendario-lunar') }}">
+                                    🌙 Calendário Lunar
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ request()->routeIs('website.planetas') ? 'active' : '' }}"
+                                   href="{{ route('website.planetas') }}">
+                                    🪐 Planetas
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ request()->routeIs('website.hora-planetaria') ? 'active' : '' }}"
+                                   href="{{ route('website.hora-planetaria') }}">
+                                    ⏳ Hora Planetária
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ request()->routeIs('website.elements') ? 'active' : '' }}"
+                                   href="{{ route('website.elements') }}">
+                                    🌪️ Elementos
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ request()->routeIs('website.numeros-misticos') ? 'active' : '' }}"
+                                   href="{{ route('website.numeros-misticos') }}">
+                                    🔢 Números Místicos
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ request()->routeIs('website.chakras') ? 'active' : '' }}"
+                                   href="{{ route('website.chakras') }}">
+                                    🧘 Chakras
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ request()->routeIs('website.sabbats') ? 'active' : '' }}"
+                                   href="{{ route('website.sabbats') }}">
+                                    🌾 Sabbats
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ request()->routeIs('website.ritual-planner.index') ? 'active' : '' }}"
+                                   href="{{ route('website.ritual-planner.index') }}">
+                                    🔮 Planejador de Rituais
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     @auth
@@ -159,18 +210,17 @@
                 <i class="fas fa-home fa-lg"></i><br>
                 <small>Home</small>
             </a>
-            <a href="{{ route('website.alchemy.index') }}" class="text-center text-white text-decoration-none">
-                <i class="fas fa-flask fa-lg"></i><br>
-                <small>Alquimias</small>
-            </a>
-            <a href="#" class="text-center text-white text-decoration-none" data-bs-toggle="modal"
-                data-bs-target="#publicarModal">
-                <i class="fas fa-plus-circle fa-lg"></i><br>
-                <small>Publicar</small>
-            </a>
             <a href="{{ route('website.herb.index') }}" class="text-center text-white text-decoration-none">
                 <i class="fas fa-leaf fa-lg"></i><br>
                 <small>Ervas</small>
+            </a>
+            <a href="#" class="text-center text-white text-decoration-none" data-bs-toggle="modal" data-bs-target="#toolsModal">
+                <i class="fas fa-tools fa-lg"></i><br>
+                <small>Ferramentas</small>
+            </a>
+            <a href="{{ route('website.alchemy.index') }}" class="text-center text-white text-decoration-none">
+                <i class="fas fa-flask fa-lg"></i><br>
+                <small>Alquimias</small>
             </a>
             @auth
             <a href="{{ route('website.profile.index', auth()->user()->username) }}"
@@ -184,6 +234,39 @@
                 <small>Entrar</small>
             </a>
             @endauth
+        </div>
+    </div>
+    <!-- Modal de Ferramentas para Mobile -->
+    <div class="modal fade" id="toolsModal" tabindex="-1" aria-labelledby="toolsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="toolsModalLabel">🛠️ Ferramentas Místicas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <a href="{{ route('website.calendario-lunar') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                            <span class="me-3">🌙</span> Calendário Lunar
+                        </a>
+                        <a href="{{ route('website.planetas') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                            <span class="me-3">🪐</span> Planetas
+                        </a>
+                        <a href="{{ route('website.hora-planetaria') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                            <span class="me-3">⏳</span> Hora Planetária
+                        </a>
+                        <a href="{{ route('website.elements') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                            <span class="me-3">🌪️</span> Elementos
+                        </a>
+                        <a href="{{ route('website.numeros-misticos') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                            <span class="me-3">🔢</span> Números Místicos
+                        </a>
+                        <a href="{{ route('website.chakras') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                            <span class="me-3">🧘</span> Chakras
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Modal de Publicação -->

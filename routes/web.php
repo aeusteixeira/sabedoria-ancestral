@@ -6,21 +6,30 @@ use App\Http\Controllers\AlchemyController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\XPController;
-use App\Http\Controllers\AspectCalculatorController;
+use App\Http\Controllers\RitualPlannerController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['prefix' => '/', 'as' => 'website.'], function () {
 
     // 🏠 Páginas Principais
     Route::get('/', [WebsiteController::class, 'index'])->name('index');
-    Route::get('/hora-planetaria', [WebsiteController::class, 'horaPlanetaria'])->name('hora-planetaria');
-    Route::get('/calendario-lunar', [WebsiteController::class, 'calendarioLunar'])->name('calendario-lunar');
-    Route::get('/planetas', [WebsiteController::class, 'planetas'])->name('planetas');
-    Route::get('/numeros-misticos', [WebsiteController::class, 'numerosMisticos'])->name('numeros-misticos');
-    Route::get('/elementos', action: [WebsiteController::class, 'elementos'])->name('elementos');
-    Route::get('/chakras', [WebsiteController::class, 'chakras'])->name('chakras');
     Route::get('/sobre', [WebsiteController::class, 'sobre'])->name('sobre');
+
+    // 🌟 Ferramentas
+    Route::prefix('ferramentas')->group(function () {
+        Route::get('/hora-planetaria', [WebsiteController::class, 'horaPlanetaria'])->name('hora-planetaria');
+        Route::get('/calendario-lunar', [WebsiteController::class, 'calendarioLunar'])->name('calendario-lunar');
+        Route::get('/planetas', [WebsiteController::class, 'planetas'])->name('planetas');
+        Route::get('/numeros-misticos', [WebsiteController::class, 'numerosMisticos'])->name('numeros-misticos');
+        Route::get('/elementos', [WebsiteController::class, 'elementos'])->name('elements');
+        Route::get('/chakras', [WebsiteController::class, 'chakras'])->name('chakras');
+        Route::get('/sabbats', [WebsiteController::class, 'sabbats'])->name('sabbats');
+
+        Route::get('/planejador-rituais', [RitualPlannerController::class, 'index'])->name('ritual-planner.index');
+        Route::post('/planejador-rituais/calculate', [RitualPlannerController::class, 'calculate'])->name('ritual-planner.calculate');
+    });
 
     // 🌿 Ervas
     Route::get('/ervas', [HerbController::class, 'index'])->name('herb.index');
@@ -62,10 +71,6 @@ Route::group(['prefix' => '/', 'as' => 'website.'], function () {
     Route::get('/perfil/{username}/editar', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/perfil/{username}', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/perfil/{username}/configuracoes', [ProfileController::class, 'settings'])->name('profile.settings');
-
-    // Rotas da Calculadora de Aspectos
-    Route::get('/aspects', [AspectCalculatorController::class, 'index'])->name('aspects.index');
-    Route::post('/aspects/calculate', [AspectCalculatorController::class, 'calculate'])->name('aspects.calculate');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -82,6 +87,4 @@ Route::middleware(['auth'])->group(function () {
     // Seguir/Deixar de seguir
     Route::post('/profile/{username}/follow', [ProfileController::class, 'follow'])->name('website.profile.follow');
     Route::delete('/profile/{username}/unfollow', [ProfileController::class, 'unfollow'])->name('website.profile.unfollow');
-
-
 });
